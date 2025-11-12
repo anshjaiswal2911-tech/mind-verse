@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindVerse - AI-Powered Self-Discovery Universe</title>
+    <style>
+        /* ===== CSS VARIABLES FOR THEMING ===== */
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-card: #1a1f3a;
+            --accent-cyan: #00f0ff;
+            --accent-magenta: #ff00ff;
+            --accent-purple: #8b5cf6;
+            --text-primary: #e0e7ff;
+            --text-secondary: #a0aec0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0933 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: rgba(26, 31, 58, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-cyan);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links button:hover,
+        .nav-links button.active {
+            color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-purple);
+            border: 1px solid var(--accent-purple);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        /* ===== MOOD ANALYZER ===== */
+        .emoji-selector {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .emoji-btn {
+            font-size: 2rem;
+            padding: 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .emoji-btn:hover {
+            border-color: var(--accent-cyan);
+            transform: scale(1.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .mood-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 240, 255, 0.1);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 8px;
+        }
+
+        /* ===== UNIVERSE CANVAS ===== */
+        #universeCanvas {
+            width: 100%;
+            height: 600px;
+            border-radius: 16px;
+            background: radial-gradient(circle at center, #1a0933 0%, #0a0e27 100%);
+            cursor: pointer;
+        }
+
+        .universe-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+        }
+
+        /* ===== FOCUS MODE ===== */
+        .timer-display {
+            font-size: 4rem;
+            text-align: center;
+            margin: 2rem 0;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .focus-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-cyan);
+        }
+
+        /* ===== CAREER QUIZ ===== */
+        .quiz-question {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.2);
+        }
+
+        .career-results {
+            margin-top: 2rem;
+        }
+
+        .career-card {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        /* ===== JOURNAL ===== */
+        .journal-entry {
+            background: rgba(139, 92, 246, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+
+        .journal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .journal-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mood-chart {
+            margin-top: 2rem;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .chart-label {
+            width: 100px;
+            font-size: 0.9rem;
+        }
+
+        .chart-bar-fill {
+            height: 30px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* ===== GAMES SECTION ===== */
+        .game-recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .game-card {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .game-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .game-container {
+            margin-top: 2rem;
+            background: rgba(26, 31, 58, 0.5);
+            border-radius: 16px;
+            padding: 2rem;
+            display: none;
+        }
+
+        .game-container.active {
+            display: block;
+        }
+
+        /* Breathing Game */
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-cyan), var(--accent-purple));
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            transition: all 4s ease-in-out;
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.5);
+        }
+
+        .breathing-circle.hold {
+            transform: scale(1.5);
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(1);
+        }
+
+        .breathing-controls {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* Memory Game */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-purple);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .memory-card.matched {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            cursor: default;
+        }
+
+        /* Color Match Game */
+        .color-match-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .color-word {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(26, 31, 58, 0.5);
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .color-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .game-score {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        /* AI Chat Interface */
+        .ai-chat {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .chat-container {
+            background: rgba(26, 31, 58, 0.5);
+            border-radius: 16px;
+            padding: 1.5rem;
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .chat-message.ai {
+            justify-content: flex-start;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 16px;
+            word-wrap: break-word;
+        }
+
+        .ai .message-bubble {
+            background: rgba(139, 92, 246, 0.2);
+            border-bottom-left-radius: 4px;
+        }
+
+        .user .message-bubble {
+            background: rgba(0, 240, 255, 0.2);
+            border-bottom-right-radius: 4px;
+            margin-left: auto;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-cyan);
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .mood-emoji-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mood-emoji-option {
+            font-size: 2.5rem;
+            padding: 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mood-emoji-option:hover {
+            border-color: var(--accent-cyan);
+            transform: scale(1.1);
+        }
+
+        /* ===== CBT PROMPTS ===== */
+        .cbt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .cbt-overlay.active {
+            display: flex;
+        }
+
+        .cbt-modal {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            border: 2px solid var(--accent-purple);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.5rem;
+            }
+            .nav-links button {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .timer-display {
+                font-size: 3rem;
+            }
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .message-bubble {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">✨ MindVerse</div>
+        <ul class="nav-links">
+            <li><button onclick="showSection('home')" class="active">Home</button></li>
+            <li><button onclick="showSection('mood')">Mood Analyzer</button></li>
+            <li><button onclick="showSection('universe')">Universe</button></li>
+            <li><button onclick="showSection('focus')">Focus</button></li>
+            <li><button onclick="showSection('career')">Career</button></li>
+            <li><button onclick="showSection('games')">Games</button></li>
+            <li><button onclick="showSection('journal')">Journal</button></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- HOME SECTION -->
+        <section id="home" class="section active">
+            <div class="card">
+                <h2>Welcome to MindVerse 🌌</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                    Your AI-powered companion for self-discovery, emotional awareness, and personal growth. 
+                    Track your moods, visualize your emotional universe, boost productivity, and explore career paths—all in one cosmic experience.
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="showSection('mood')">Start Mood Check</button>
+                    <button class="btn btn-secondary" onclick="populateDemoData()">Load Demo Data</button>
+                    <button class="btn btn-danger" onclick="resetAllData()">Reset Data</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Quick Stats</h2>
+                <div class="focus-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="homeEntryCount">0</div>
+                        <div>Journal Entries</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="homeFocusCount">0</div>
+                        <div>Focus Sessions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="homeStreak">0</div>
+                        <div>Day Streak</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOOD ANALYZER SECTION -->
+        <section id="mood" class="section">
+            <div class="card">
+                <h2>Mood Analyzer 💭</h2>
+                <p style="margin-bottom: 1rem;">How are you feeling today? Write about it or select an emoji:</p>
+                
+                <div class="emoji-selector">
+                    <button class="emoji-btn" onclick="quickMood('😊', 'Happy')">😊</button>
+                    <button class="emoji-btn" onclick="quickMood('😌', 'Calm')">😌</button>
+                    <button class="emoji-btn" onclick="quickMood('😐', 'Neutral')">😐</button>
+                    <button class="emoji-btn" onclick="quickMood('😰', 'Anxious')">😰</button>
+                    <button class="emoji-btn" onclick="quickMood('😫', 'Stressed')">😫</button>
+                    <button class="emoji-btn" onclick="quickMood('😴', 'Bored')">😴</button>
+                </div>
+
+                <textarea id="moodText" placeholder="Or write about your feelings in detail..."></textarea>
+                
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="analyzeMood()">Analyze Mood</button>
+                </div>
+
+                <div id="moodResult" style="display: none;" class="mood-result">
+                    <h3>Analysis Result</h3>
+                    <p><strong>Mood:</strong> <span id="moodLabel"></span> <span id="moodEmoji"></span></p>
+                    <p><strong>Score:</strong> <span id="moodScore"></span></p>
+                    <p id="moodSummary"></p>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="showSection('games')">Try Mood-Based Games</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIVERSE SECTION -->
+        <section id="universe" class="section">
+            <div class="card">
+                <h2>Your Emotional Universe 🌍</h2>
+                <p style="margin-bottom: 1rem;">Each planet represents a day's emotional state. Click to explore!</p>
+                <canvas id="universeCanvas"></canvas>
+                <div class="universe-info">
+                    <p><strong>Planet Growth Level:</strong> <span id="planetGrowth">0</span> 🌱</p>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Complete focus sessions to grow your planets!
+                    </p>
+                </div>
+            </div>
+
+            <div id="planetDetail" class="card" style="display: none;">
+                <h2>Planet Details</h2>
+                <div id="planetDetailContent"></div>
+                <button class="btn btn-secondary" onclick="closePlanetDetail()">Close</button>
+            </div>
+        </section>
+
+        <!-- FOCUS MODE SECTION -->
+        <section id="focus" class="section">
+            <div class="card">
+                <h2>Focus Mode 🎯</h2>
+                <p style="margin-bottom: 1rem;">Boost productivity with Pomodoro technique. Complete sessions to grow your universe!</p>
+                
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                
+                <div class="timer-controls">
+                    <button class="btn btn-primary" onclick="startFocusSession()">Start Focus</button>
+                    <button class="btn btn-secondary" onclick="pauseTimer()">Pause</button>
+                    <button class="btn btn-danger" onclick="resetTimer()">Reset</button>
+                </div>
+
+                <div style="margin-top: 2rem; text-align: center;">
+                    <label>Session Length: </label>
+                    <select id="sessionLength" style="padding: 0.5rem; border-radius: 4px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--accent-purple);">
+                        <option value="10">Quick (10 min)</option>
+                        <option value="15">Short (15 min)</option>
+                        <option value="25" selected>Standard (25 min)</option>
+                    </select>
+                </div>
+
+                <div class="focus-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalSessions">0</div>
+                        <div>Total Sessions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="focusStreak">0</div>
+                        <div>Current Streak</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalMinutes">0</div>
+                        <div>Total Minutes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAREER SECTION -->
+        <section id="career" class="section">
+            <div class="card">
+                <h2>Career Pathfinder 🚀</h2>
+                <p style="margin-bottom: 2rem;">Answer a few questions to discover your ideal career paths based on RAISEC personality types.</p>
+                
+                <div id="careerQuiz">
+                    <div class="quiz-question">
+                        <h3>1. What energizes you most?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(0, 'R')">🔧 Working with tools and machines</div>
+                            <div class="quiz-option" onclick="selectOption(0, 'I')">🔬 Solving complex problems and research</div>
+                            <div class="quiz-option" onclick="selectOption(0, 'A')">🎨 Creating and expressing ideas</div>
+                            <div class="quiz-option" onclick="selectOption(0, 'S')">🤝 Helping and teaching others</div>
+                            <div class="quiz-option" onclick="selectOption(0, 'E')">📊 Leading teams and making decisions</div>
+                            <div class="quiz-option" onclick="selectOption(0, 'C')">📋 Organizing and managing data</div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h3>2. What's your preferred work environment?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(1, 'R')">🏗️ Hands-on, physical workspaces</div>
+                            <div class="quiz-option" onclick="selectOption(1, 'I')">🧪 Laboratories and research facilities</div>
+                            <div class="quiz-option" onclick="selectOption(1, 'A')">🎭 Creative studios and flexible spaces</div>
+                            <div class="quiz-option" onclick="selectOption(1, 'S')">🏥 Community-focused environments</div>
+                            <div class="quiz-option" onclick="selectOption(1, 'E')">🏢 Dynamic business settings</div>
+                            <div class="quiz-option" onclick="selectOption(1, 'C')">💻 Structured office environments</div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h3>3. What skills do you excel at?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="selectOption(2, 'R')">⚙️ Technical and mechanical skills</div>
+                            <div class="quiz-option" onclick="selectOption(2, 'I')">🧠 Analytical and critical thinking</div>
+                            <div class="quiz-option" onclick="selectOption(2, 'A')">✨ Innovation and imagination</div>
+                            <div class="quiz-option" onclick="selectOption(2, 'S')">💬 Empathy and communication</div>
+                            <div class="quiz-option" onclick="selectOption(2, 'E')">📈 Persuasion and negotiation</div>
+                            <div class="quiz-option" onclick="selectOption(2, 'C')">📊 Attention to detail and organization</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="calculateCareer()" style="margin-top: 2rem;">Get Career Suggestions</button>
+                </div>
+
+                <div id="careerResults" class="career-results" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- GAMES SECTION -->
+        <section id="games" class="section">
+            <div class="card">
+                <h2>AI Game Assistant 🎮</h2>
+                <p style="margin-bottom: 1.5rem;">Let me help you find the perfect game based on your current mood!</p>
+                
+                <div class="ai-chat">
+                    <div class="chat-container" id="chatContainer">
+                        <div class="chat-message ai">
+                            <div class="message-bubble">
+                                Hello! I'm your AI game assistant. I'd love to recommend some games for you, but first, could you tell me how you're feeling today? 😊
+                            </div>
+                        </div>
+                        <div class="typing-indicator" id="typingIndicator">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" class="chat-input" placeholder="Type your response here..." onkeypress="handleChatKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Recommendations (hidden initially) -->
+            <div id="gameRecommendationsCard" class="card" style="display: none;">
+                <h2>Recommended Games For You</h2>
+                <div class="game-recommendations" id="gameRecommendations">
+                    <!-- Games will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Breathing Game -->
+            <div id="breathingGame" class="game-container">
+                <h2>Breathing Exercise 🧘</h2>
+                <p style="text-align: center; margin-bottom: 1rem;">Follow the circle to regulate your breathing and reduce anxiety.</p>
+                
+                <div class="breathing-circle" id="breathingCircle">Ready</div>
+                
+                <div class="breathing-controls">
+                    <button class="btn btn-primary" onclick="startBreathing()">Start Exercise</button>
+                    <button class="btn btn-secondary" onclick="stopBreathing()">Stop</button>
+                </div>
+                
+                <div style="margin-top: 2rem; text-align: center; color: var(--text-secondary);">
+                    <p>Instructions: Inhale as the circle expands, hold your breath, then exhale as it contracts.</p>
+                </div>
+            </div>
+
+            <!-- Memory Game -->
+            <div id="memoryGame" class="game-container">
+                <h2>Memory Match 🧩</h2>
+                <p style="text-align: center; margin-bottom: 1rem;">Find all matching pairs to improve focus and memory.</p>
+                
+                <div class="game-score">
+                    <span>Moves: </span><span id="memoryMoves">0</span> | 
+                    <span>Matches: </span><span id="memoryMatches">0</span>/<span id="memoryTotal">8</span>
+                </div>
+                
+                <div class="memory-grid" id="memoryGrid">
+                    <!-- Memory cards will be generated here -->
+                </div>
+                
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="initMemoryGame()">New Game</button>
+                </div>
+            </div>
+
+            <!-- Color Match Game -->
+            <div id="colorMatchGame" class="game-container">
+                <h2>Color Match Challenge 🎨</h2>
+                <p style="text-align: center; margin-bottom: 1rem;">Select the color that matches the text, not the word itself!</p>
+                
+                <div class="color-match-container">
+                    <div class="game-score">
+                        <span>Score: </span><span id="colorScore">0</span> | 
+                        <span>High Score: </span><span id="colorHighScore">0</span>
+                    </div>
+                    
+                    <div class="color-word" id="colorWord">Loading...</div>
+                    
+                    <div class="color-options" id="colorOptions">
+                        <!-- Color buttons will be generated here -->
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="initColorMatch()">New Round</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNAL SECTION -->
+        <section id="journal" class="section">
+            <div class="card">
+                <h2>Your Journal 📖</h2>
+                <div id="journalList"></div>
+                
+                <div class="mood-chart">
+                    <h3>Mood Distribution (Last 7 Entries)</h3>
+                    <div id="moodChartBars"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CBT OVERLAY -->
+    <div id="cbtOverlay" class="cbt-overlay">
+        <div class="cbt-modal">
+            <h2>Quick Mindfulness Check 🧘</h2>
+            <div id="cbtContent"></div>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="nextCBTStep()">Continue</button>
+                <button class="btn btn-secondary" onclick="skipCBT()">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== GLOBAL STATE =====
+        let currentSection = 'home';
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let timerRunning = false;
+        let quizAnswers = ['', '', ''];
+        let cbtStep = 0;
+        let cbtResponses = [];
+        let currentMood = 'Neutral';
+        let currentMoodScore = 0;
+
+        // Universe animation state
+        let universeAnimationId = null;
+        let planets = [];
+
+        // Game state
+        let breathingInterval = null;
+        let memoryCards = [];
+        let flippedCards = [];
+        let memoryMoves = 0;
+        let memoryMatches = 0;
+        let colorScore = 0;
+        let colorHighScore = 0;
+        let currentColorWord = '';
+        let currentColorText = '';
+
+        // Chat state
+        let chatState = 'initial'; // initial, analyzing, recommending
+        let userMoodDescription = '';
+
+        // ===== EMOTION LEXICON (Simulated AI) =====
+        const emotionLexicon = {
+            positive: [
+                'happy', 'joy', 'excited', 'great', 'wonderful', 'amazing', 'love', 'blessed',
+                'grateful', 'peaceful', 'calm', 'relaxed', 'content', 'satisfied', 'proud',
+                'confident', 'energetic', 'motivated', 'inspired', 'hopeful', 'optimistic'
+            ],
+            negative: [
+                'sad', 'depressed', 'anxious', 'worried', 'stressed', 'angry', 'frustrated',
+                'upset', 'hurt', 'lonely', 'tired', 'exhausted', 'overwhelmed', 'confused',
+                'scared', 'afraid', 'nervous', 'irritated', 'disappointed', 'hopeless'
+            ],
+            neutral: ['okay', 'fine', 'normal', 'average', 'alright', 'meh']
+        };
+
+        // ===== GAME RECOMMENDATIONS =====
+        const gameRecommendations = {
+            'Happy': [
+                {
+                    id: 'colorMatch',
+                    title: 'Color Match Challenge',
+                    icon: '🎨',
+                    description: 'Test your focus with this fun color-matching game. Great for maintaining your positive energy!',
+                    mood: 'Happy'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Match',
+                    icon: '🧩',
+                    description: 'Challenge your memory with this engaging card-matching game.',
+                    mood: 'Happy'
+                }
+            ],
+            'Calm': [
+                {
+                    id: 'breathing',
+                    title: 'Breathing Exercise',
+                    icon: '🧘',
+                    description: 'Enhance your state of calm with guided breathing exercises.',
+                    mood: 'Calm'
+                },
+                {
+                    id: 'colorMatch',
+                    title: 'Color Match Challenge',
+                    icon: '🎨',
+                    description: 'A gentle challenge to maintain your peaceful state.',
+                    mood: 'Calm'
+                }
+            ],
+            'Neutral': [
+                {
+                    id: 'memory',
+                    title: 'Memory Match',
+                    icon: '🧩',
+                    description: 'Engage your mind and boost your energy with this memory game.',
+                    mood: 'Neutral'
+                },
+                {
+                    id: 'colorMatch',
+                    title: 'Color Match Challenge',
+                    icon: '🎨',
+                    description: 'Add some excitement to your day with this color-matching game.',
+                    mood: 'Neutral'
+                }
+            ],
+            'Stressed': [
+                {
+                    id: 'breathing',
+                    title: 'Breathing Exercise',
+                    icon: '🧘',
+                    description: 'Reduce stress with guided breathing exercises designed to calm your nervous system.',
+                    mood: 'Stressed'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Match',
+                    icon: '🧩',
+                    description: 'Shift your focus away from stressors with this engaging memory game.',
+                    mood: 'Stressed'
+                }
+            ],
+            'Anxious': [
+                {
+                    id: 'breathing',
+                    title: 'Breathing Exercise',
+                    icon: '🧘',
+                    description: 'Alleviate anxiety with structured breathing techniques that promote relaxation.',
+                    mood: 'Anxious'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Match',
+                    icon: '🧩',
+                    description: 'Distract your mind from anxious thoughts with this focused memory game.',
+                    mood: 'Anxious'
+                }
+            ],
+            'Bored': [
+                {
+                    id: 'colorMatch',
+                    title: 'Color Match Challenge',
+                    icon: '🎨',
+                    description: 'Beat boredom with this engaging and challenging color-matching game.',
+                    mood: 'Bored'
+                },
+                {
+                    id: 'memory',
+                    title: 'Memory Match',
+                    icon: '🧩',
+                    description: 'Stimulate your mind and overcome boredom with this memory game.',
+                    mood: 'Bored'
+                }
+            ]
+        };
+
+        // ===== UTILITY FUNCTIONS =====
+        function showSection(sectionId) {
+            // Update nav buttons
+            document.querySelectorAll('.nav-links button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            currentSection = sectionId;
+
+            // Load section-specific data
+            if (sectionId === 'journal') {
+                renderJournal();
+            } else if (sectionId === 'universe') {
+                renderUniverse();
+            } else if (sectionId === 'focus') {
+                updateFocusStats();
+            } else if (sectionId === 'home') {
+                updateHomeStats();
+            } else if (sectionId === 'games') {
+                initGameChat();
+            }
+        }
+
+        // ===== MOOD ANALYZER =====
+        function quickMood(emoji, label) {
+            document.getElementById('moodText').value = `I'm feeling ${label.toLowerCase()} today ${emoji}`;
+            analyzeMood();
+        }
+
+        function analyzeMood() {
+            const text = document.getElementById('moodText').value.trim();
+            
+            if (!text) {
+                alert('Please write something or select an emoji!');
+                return;
+            }
+
+            // Simulated AI: Simple sentiment analysis using lexicon
+            const words = text.toLowerCase().split(/\s+/);
+            let positiveCount = 0;
+            let negativeCount = 0;
+            let neutralCount = 0;
+
+            words.forEach(word => {
+                if (emotionLexicon.positive.some(p => word.includes(p))) positiveCount++;
+                if (emotionLexicon.negative.some(n => word.includes(n))) negativeCount++;
+                if (emotionLexicon.neutral.some(n => word.includes(n))) neutralCount++;
+            });
+
+            // Calculate score (-100 to 100)
+            const totalEmotional = positiveCount + negativeCount || 1;
+            const score = Math.round(((positiveCount - negativeCount) / totalEmotional) * 100);
+
+            // Determine mood label
+            let moodLabel, moodEmoji;
+            if (score >= 50) {
+                moodLabel = 'Happy';
+                moodEmoji = '😊';
+            } else if (score >= 20) {
+                moodLabel = 'Calm';
+                moodEmoji = '😌';
+            } else if (score >= -20) {
+                moodLabel = 'Neutral';
+                moodEmoji = '😐';
+            } else if (score >= -50) {
+                moodLabel = 'Stressed';
+                moodEmoji = '😰';
+            } else {
+                moodLabel = 'Anxious';
+                moodEmoji = '😫';
+            }
+
+            // Update global mood state
+            currentMood = moodLabel;
+            currentMoodScore = score;
+
+            // Display result
+            document.getElementById('moodLabel').textContent = moodLabel;
+            document.getElementById('moodEmoji').textContent = moodEmoji;
+            document.getElementById('moodScore').textContent = score;
+            document.getElementById('moodSummary').textContent = 
+                `Based on your entry, you seem to be feeling ${moodLabel.toLowerCase()}. ${getMoodAdvice(moodLabel)}`;
+            document.getElementById('moodResult').style.display = 'block';
+
+            // Save entry
+            saveEntry(text, moodLabel, score, moodEmoji);
+        }
+
+        function getMoodAdvice(mood) {
+            const advice = {
+                'Happy': 'Keep up the positive energy! Consider journaling what made you feel this way.',
+                'Calm': 'A peaceful state is wonderful. This is a great time for reflection or creative work.',
+                'Neutral': 'Feeling balanced is okay. Try a focus session to energize yourself.',
+                'Stressed': 'Take a deep breath. Consider trying our Focus Mode or writing more about what\'s on your mind.',
+                'Anxious': 'It\'s okay to feel this way. Try our CBT-guided focus session or reach out to someone you trust.'
+            };
+            return advice[mood] || 'Remember to be kind to yourself today.';
+        }
+
+        // ===== DATA PERSISTENCE =====
+        function saveEntry(text, mood, score, emoji) {
+            const entries = getEntries();
+            const entry = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                text: text,
+                mood: mood,
+                score: score,
+                emoji: emoji
+            };
+            entries.push(entry);
+            localStorage.setItem('mindverse_entries', JSON.stringify(entries));
+            
+            alert('✨ Mood entry saved to your journal!');
+            document.getElementById('moodText').value = '';
+        }
+
+        function getEntries() {
+            const stored = localStorage.getItem('mindverse_entries');
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function deleteEntry(id) {
+            if (!confirm('Delete this entry?')) return;
+            
+            const entries = getEntries().filter(e => e.id !== id);
+            localStorage.setItem('mindverse_entries', JSON.stringify(entries));
+            renderJournal();
+        }
+
+        function getFocusData() {
+            const stored = localStorage.getItem('mindverse_focus');
+            return stored ? JSON.parse(stored) : { sessions: 0, streak: 0, totalMinutes: 0, lastDate: null };
+        }
+
+        function saveFocusData(data) {
+            localStorage.setItem('mindverse_focus', JSON.stringify(data));
+        }
+
+        function getPlanetGrowth() {
+            return parseInt(localStorage.getItem('mindverse_growth') || '0');
+        }
+
+        function incrementPlanetGrowth() {
+            const current = getPlanetGrowth();
+            localStorage.setItem('mindverse_growth', (current + 1).toString());
+        }
+
+        // ===== JOURNAL RENDERING =====
+        function renderJournal() {
+            const entries = getEntries().sort((a, b) => b.id - a.id);
+            const container = document.getElementById('journalList');
+            
+            if (entries.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary);">No entries yet. Start by analyzing your mood!</p>';
+                document.getElementById('moodChartBars').innerHTML = '<p style="color: var(--text-secondary);">No data to display</p>';
+                return;
+            }
+
+            container.innerHTML = entries.map(entry => {
+                const date = new Date(entry.date);
+                const borderColor = getMoodColor(entry.mood);
+                return `
+                    <div class="journal-entry" style="border-left-color: ${borderColor}">
+                        <div class="journal-header">
+                            <div>
+                                <strong>${entry.emoji} ${entry.mood}</strong> - ${date.toLocaleDateString()} ${date.toLocaleTimeString()}
+                            </div>
+                            <div class="journal-actions">
+                                <button class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteEntry(${entry.id})">Delete</button>
+                            </div>
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-secondary);">${entry.text.substring(0, 150)}${entry.text.length > 150 ? '...' : ''}</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Score:</strong> ${entry.score}</p>
+                    </div>
+                `;
+            }).join('');
+
+            // Render mood chart
+            renderMoodChart(entries);
+        }
+
+        function renderMoodChart(entries) {
+            const last7 = entries.slice(0, 7);
+            const moodCounts = {};
+            
+            last7.forEach(entry => {
+                moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
+            });
+
+            const maxCount = Math.max(...Object.values(moodCounts), 1);
+            const chartHtml = Object.entries(moodCounts).map(([mood, count]) => {
+                const percentage = (count / maxCount) * 100;
+                return `
+                    <div class="chart-bar">
+                        <div class="chart-label">${mood}</div>
+                        <div class="chart-bar-fill" style="width: ${percentage}%"></div>
+                        <span style="margin-left: 0.5rem; font-size: 0.9rem;">${count}</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('moodChartBars').innerHTML = chartHtml || '<p>No data</p>';
+        }
+
+        function getMoodColor(mood) {
+            const colors = {
+                'Happy': '#10b981',
+                'Calm': '#3b82f6',
+                'Neutral': '#6b7280',
+                'Stressed': '#f59e0b',
+                'Anxious': '#ef4444',
+                'Bored': '#8b5cf6'
+            };
+            return colors[mood] || '#6b7280';
+        }
+
+        // ===== UNIVERSE VISUALIZATION =====
+        function renderUniverse() {
+            const canvas = document.getElementById('universeCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            // Get last 7 entries
+            const entries = getEntries().slice(-7);
+            const growth = getPlanetGrowth();
+            
+            document.getElementById('planetGrowth').textContent = growth;
+
+            // Create planet objects
+            planets = entries.map((entry, index) => {
+                const angle = (index / 7) * Math.PI * 2;
+                const radius = 150 + (index * 10);
+                
+                return {
+                    x: canvas.width / 2 + Math.cos(angle) * radius,
+                    y: canvas.height / 2 + Math.sin(angle) * radius,
+                    size: 20 + (entry.score + 100) / 10 + growth * 2,
+                    color: getMoodColor(entry.mood),
+                    entry: entry,
+                    angle: angle,
+                    radius: radius,
+                    orbitSpeed: 0.001 + (index * 0.0002)
+                };
+            });
+
+            // Start animation
+            if (universeAnimationId) {
+                cancelAnimationFrame(universeAnimationId);
+            }
+            animateUniverse(ctx, canvas);
+
+            // Add click handler
+            canvas.onclick = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                planets.forEach(planet => {
+                    const dx = x - planet.x;
+                    const dy = y - planet.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < planet.size) {
+                        showPlanetDetail(planet.entry);
+                    }
+                });
+            };
+        }
+
+        function animateUniverse(ctx, canvas) {
+            // Clear canvas
+            ctx.fillStyle = '#0a0e27';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw stars
+            for (let i = 0; i < 100; i++) {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.beginPath();
+                ctx.arc(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    Math.random() * 1.5,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+            }
+
+            // Draw center sun
+            const gradient = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, 50);
+            gradient.addColorStop(0, '#00f0ff');
+            gradient.addColorStop(1, '#8b5cf6');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, 30, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Update and draw planets
+            planets.forEach((planet, index) => {
+                // Update position (orbit)
+                planet.angle += planet.orbitSpeed;
+                planet.x = canvas.width / 2 + Math.cos(planet.angle) * planet.radius;
+                planet.y = canvas.height / 2 + Math.sin(planet.angle) * planet.radius;
+
+                // Draw orbit path
+                ctx.strokeStyle = 'rgba(139, 92, 246, 0.2)';
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2, planet.radius, 0, Math.PI * 2);
+                ctx.stroke();
+
+                // Draw planet
+                const planetGradient = ctx.createRadialGradient(planet.x, planet.y, 0, planet.x, planet.y, planet.size);
+                planetGradient.addColorStop(0, planet.color);
+                planetGradient.addColorStop(1, '#1a1f3a');
+                ctx.fillStyle = planetGradient;
+                ctx.beginPath();
+                ctx.arc(planet.x, planet.y, planet.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw glow
+                ctx.strokeStyle = planet.color + '60';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(planet.x, planet.y, planet.size + 5, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            universeAnimationId = requestAnimationFrame(() => animateUniverse(ctx, canvas));
+        }
+
+        function showPlanetDetail(entry) {
+            const date = new Date(entry.date);
+            document.getElementById('planetDetailContent').innerHTML = `
+                <p><strong>Date:</strong> ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</p>
+                <p><strong>Mood:</strong> ${entry.emoji} ${entry.mood}</p>
+                <p><strong>Score:</strong> ${entry.score}</p>
+                <p style="margin-top: 1rem;"><strong>Entry:</strong></p>
+                <p style="color: var(--text-secondary);">${entry.text}</p>
+            `;
+            document.getElementById('planetDetail').style.display = 'block';
+        }
+
+        function closePlanetDetail() {
+            document.getElementById('planetDetail').style.display = 'none';
+        }
+
+        // ===== FOCUS MODE / POMODORO =====
+        function startFocusSession() {
+            // Check if user is anxious/stressed
+            const recentEntries = getEntries().slice(-3);
+            const hasAnxiety = recentEntries.some(e => e.mood === 'Anxious' || e.mood === 'Stressed');
+
+            if (hasAnxiety && !localStorage.getItem('cbt_completed_today')) {
+                // Show CBT prompts
+                showCBTPrompts();
+            } else {
+                beginFocusTimer();
+            }
+        }
+
+        function beginFocusTimer() {
+            if (timerRunning) return;
+
+            const minutes = parseInt(document.getElementById('sessionLength').value);
+            timerSeconds = minutes * 60;
+            timerRunning = true;
+
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    completeFocusSession();
+                }
+            }, 1000);
+
+            updateTimerDisplay();
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+ 
+        function resetTimer() {
+            pauseTimer();
+            const minutes = parseInt(document.getElementById('sessionLength').value);
+            timerSeconds = minutes * 60;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function completeFocusSession() {
+            pauseTimer();
+            
+            // Update focus data
+            const focusData = getFocusData();
+            const today = new Date().toDateString();
+            
+            focusData.sessions++;
+            focusData.totalMinutes += parseInt(document.getElementById('sessionLength').value);
+            
+            if (focusData.lastDate === today) {
+                // Same day
+            } else if (focusData.lastDate === new Date(Date.now() - 86400000).toDateString()) {
+                // Consecutive day
+                focusData.streak++;
+            } else {
+                // Streak broken
+                focusData.streak = 1;
+            }
+            
+            focusData.lastDate = today;
+            saveFocusData(focusData);
+
+            // Increment planet growth
+            incrementPlanetGrowth();
+
+            // Reset timer
+            const minutes = parseInt(document.getElementById('sessionLength').value);
+            timerSeconds = minutes * 60;
+            updateTimerDisplay();
+
+            updateFocusStats();
+            alert('🎉 Focus session complete! Your universe has grown! 🌱');
+        }
+
+        function updateFocusStats() {
+            const data = getFocusData();
+            document.getElementById('totalSessions').textContent = data.sessions;
+            document.getElementById('focusStreak').textContent = data.streak;
+            document.getElementById('totalMinutes').textContent = data.totalMinutes;
+        }
+
+        // ===== CBT PROMPTS =====
+        function showCBTPrompts() {
+            cbtStep = 0;
+            cbtResponses = [];
+            document.getElementById('cbtOverlay').classList.add('active');
+            displayCBTStep();
+        }
+
+        function displayCBTStep() {
+            const prompts = [
+                {
+                    question: 'What thought is making you feel anxious or stressed right now?',
+                    placeholder: 'E.g., "I\'m worried I won\'t finish this project on time"'
+                },
+                {
+                    question: 'Is there evidence that contradicts this thought? What\'s a more balanced perspective?',
+                    placeholder: 'E.g., "I\'ve completed similar projects before, and I have support if needed"'
+                }
+            ];
+
+            if (cbtStep < prompts.length) {
+                const prompt = prompts[cbtStep];
+                document.getElementById('cbtContent').innerHTML = `
+                    <p style="margin-bottom: 1rem;">${prompt.question}</p>
+                    <textarea id="cbtInput" placeholder="${prompt.placeholder}" style="width: 100%; min-height: 100px;"></textarea>
+                `;
+            }
+        }
+
+        function nextCBTStep() {
+            const input = document.getElementById('cbtInput')?.value;
+            if (input && input.trim()) {
+                cbtResponses.push(input);
+            }
+
+            cbtStep++;
+
+            if (cbtStep >= 2) {
+                // Complete CBT
+                document.getElementById('cbtOverlay').classList.remove('active');
+                localStorage.setItem('cbt_completed_today', new Date().toDateString());
+                alert('Great work on the mindfulness exercise! Now let\'s focus. 🧘');
+                beginFocusTimer();
+            } else {
+                displayCBTStep();
+            }
+        }
+
+        function skipCBT() {
+            document.getElementById('cbtOverlay').classList.remove('active');
+            beginFocusTimer();
+        }
+
+        // ===== CAREER QUIZ =====
+        function selectOption(questionIndex, type) {
+            // Remove previous selection
+            const question = document.querySelectorAll('.quiz-question')[questionIndex];
+            question.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selection
+            event.target.classList.add('selected');
+            quizAnswers[questionIndex] = type;
+        }
+
+        function calculateCareer() {
+            // Check if all answered
+            if (quizAnswers.includes('')) {
+                alert('Please answer all questions!');
+                return;
+            }
+
+            // Count RAISEC types
+            const counts = {};
+            quizAnswers.forEach(answer => {
+                counts[answer] = (counts[answer] || 0) + 1;
+            });
+
+            // Sort by frequency
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+            const topTypes = sorted.slice(0, 3).map(([type]) => type);
+
+            // Get career suggestions
+            const careers = getCareerSuggestions(topTypes);
+
+            // Display results
+            displayCareerResults(careers);
+        }
+
+        function getCareerSuggestions(types) {
+            // RAISEC career mapping
+            const careerMap = {
+                'R': {
+                    title: 'Realistic - The Doer',
+                    careers: ['Mechanical Engineer', 'Electrician', 'Software Developer'],
+                    steps: [
+                        'Explore technical certifications or engineering programs',
+                        'Build hands-on projects to develop practical skills'
+                    ]
+                },
+                'I': {
+                    title: 'Investigative - The Thinker',
+                    careers: ['Data Scientist', 'Research Scientist', 'Systems Analyst'],
+                    steps: [
+                        'Pursue advanced education in your field of interest',
+                        'Start a research project or contribute to open-source'
+                    ]
+                },
+                'A': {
+                    title: 'Artistic - The Creator',
+                    careers: ['UX Designer', 'Content Creator', 'Marketing Specialist'],
+                    steps: [
+                        'Build a portfolio showcasing your creative work',
+                        'Network with creative professionals in your area of interest'
+                    ]
+                },
+                'S': {
+                    title: 'Social - The Helper',
+                    careers: ['Teacher', 'Counselor', 'Healthcare Professional'],
+                    steps: [
+                        'Volunteer in community service or mentoring programs',
+                        'Consider certifications in counseling or education'
+                    ]
+                },
+                'E': {
+                    title: 'Enterprising - The Persuader',
+                    careers: ['Entrepreneur', 'Sales Manager', 'Business Consultant'],
+                    steps: [
+                        'Develop leadership skills through team projects',
+                        'Consider an MBA or entrepreneurship program'
+                    ]
+                },
+                'C': {
+                    title: 'Conventional - The Organizer',
+                    careers: ['Accountant', 'Project Manager', 'Financial Analyst'],
+                    steps: [
+                        'Pursue certifications like CPA or PMP',
+                        'Gain experience with data management and analytics tools'
+                    ]
+                }
+            };
+
+            return types.map(type => careerMap[type]);
+        }
+
+        function displayCareerResults(careers) {
+            const html = careers.map((career, index) => `
+                <div class="career-card">
+                    <h3>${index + 1}. ${career.title}</h3>
+                    <p style="margin-top: 0.5rem;"><strong>Potential Careers:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                        ${career.careers.map(c => `<li>${c}</li>`).join('')}
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Next Steps:</strong></p>
+                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                        ${career.steps.map(s => `<li>${s}</li>`).join('')}
+                    </ol>
+                </div>
+            `).join('');
+
+            document.getElementById('careerResults').innerHTML = `
+                <h2>Your Top Career Paths 🎯</h2>
+                ${html}
+            `;
+            document.getElementById('careerResults').style.display = 'block';
+            document.getElementById('careerQuiz').style.display = 'none';
+        }
+
+        // ===== GAMES SECTION - AI CHAT =====
+        function initGameChat() {
+            // Reset chat state
+            chatState = 'initial';
+            userMoodDescription = '';
+            
+            // Clear chat container except for initial message
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = `
+                <div class="chat-message ai">
+                    <div class="message-bubble">
+                        Hello! I'm your AI game assistant. I'd love to recommend some games for you, but first, could you tell me how you're feeling today? 😊
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            
+            // Hide game recommendations
+            document.getElementById('gameRecommendationsCard').style.display = 'none';
+            
+            // Hide all games
+            document.querySelectorAll('.game-container').forEach(container => {
+                container.classList.remove('active');
+            });
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addChatMessage('user', message);
+            input.value = '';
+            
+            // Process based on current state
+            if (chatState === 'initial') {
+                // User is describing their mood
+                userMoodDescription = message;
+                chatState = 'analyzing';
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Simulate AI processing
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    analyzeMoodFromChat(message);
+                }, 1500);
+            } else if (chatState === 'recommendations') {
+                // User is responding to recommendations
+                if (message.toLowerCase().includes('breath') || message.toLowerCase().includes('relax')) {
+                    launchGame('breathing');
+                } else if (message.toLowerCase().includes('memory') || message.toLowerCase().includes('match')) {
+                    launchGame('memory');
+                } else if (message.toLowerCase().includes('color') || message.toLowerCase().includes('challenge')) {
+                    launchGame('colorMatch');
+                } else {
+                    addChatMessage('ai', "I'm not sure which game you're referring to. You can click on any of the recommended games above to start playing!");
+                }
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function addChatMessage(sender, message) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageElement = document.createElement('div');
+            messageElement.className = `chat-message ${sender}`;
+            
+            const bubbleElement = document.createElement('div');
+            bubbleElement.className = 'message-bubble';
+            bubbleElement.textContent = message;
+            
+            messageElement.appendChild(bubbleElement);
+            
+            // Insert before typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            chatContainer.insertBefore(messageElement, typingIndicator);
+            
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').classList.add('active');
+            
+            // Scroll to bottom
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function analyzeMoodFromChat(message) {
+            // Simulated AI: Simple sentiment analysis using lexicon
+            const words = message.toLowerCase().split(/\s+/);
+            let positiveCount = 0;
+            let negativeCount = 0;
+            let neutralCount = 0;
+
+            words.forEach(word => {
+                if (emotionLexicon.positive.some(p => word.includes(p))) positiveCount++;
+                if (emotionLexicon.negative.some(n => word.includes(n))) negativeCount++;
+                if (emotionLexicon.neutral.some(n => word.includes(n))) neutralCount++;
+            });
+
+            // Calculate score (-100 to 100)
+            const totalEmotional = positiveCount + negativeCount || 1;
+            const score = Math.round(((positiveCount - negativeCount) / totalEmotional) * 100);
+
+            // Determine mood label
+            let moodLabel, moodEmoji;
+            if (score >= 50) {
+                moodLabel = 'Happy';
+                moodEmoji = '😊';
+            } else if (score >= 20) {
+                moodLabel = 'Calm';
+                moodEmoji = '😌';
+            } else if (score >= -20) {
+                moodLabel = 'Neutral';
+                moodEmoji = '😐';
+            } else if (score >= -50) {
+                moodLabel = 'Stressed';
+                moodEmoji = '😰';
+            } else {
+                moodLabel = 'Anxious';
+                moodEmoji = '😫';
+            }
+
+            // Update global mood state
+            currentMood = moodLabel;
+            currentMoodScore = score;
+
+            // Add AI response
+            addChatMessage('ai', `Thanks for sharing! Based on what you've told me, it sounds like you're feeling ${moodLabel.toLowerCase()} ${moodEmoji}. Let me recommend some games that might help with that.`);
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                hideTypingIndicator();
+                recommendGames(moodLabel);
+            }, 1500);
+        }
+
+        function recommendGames(mood) {
+            // Get game recommendations for this mood
+            const recommendations = gameRecommendations[mood] || gameRecommendations['Neutral'];
+            
+            // Add AI response with game recommendations
+            let message = "Based on your mood, I recommend these games:\n\n";
+            
+            recommendations.forEach((game, index) => {
+                message += `${index + 1}. ${game.title} ${game.icon}\n${game.description}\n\n`;
+            });
+            
+            message += "Just click on any game to start playing, or tell me which one interests you!";
+            
+            addChatMessage('ai', message);
+            
+            // Update game recommendations card
+            const gameCardsHtml = recommendations.map(game => `
+                <div class="game-card" onclick="launchGame('${game.id}')">
+                    <div class="game-icon">${game.icon}</div>
+                    <h3 class="game-title">${game.title}</h3>
+                    <p class="game-description">${game.description}</p>
+                    <button class="btn btn-primary" style="margin-top: 1rem;">Play Now</button>
+                </div>
+            `).join('');
+            
+            document.getElementById('gameRecommendations').innerHTML = gameCardsHtml;
+            document.getElementById('gameRecommendationsCard').style.display = 'block';
+            
+            // Update chat state
+            chatState = 'recommendations';
+        }
+
+        function launchGame(gameId) {
+            // Hide all games
+            document.querySelectorAll('.game-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Show selected game
+            document.getElementById(`${gameId}Game`).classList.add('active');
+            
+            // Add AI message
+            const game = Object.values(gameRecommendations).flat().find(g => g.id === gameId);
+            if (game) {
+                addChatMessage('ai', `Great choice! I've loaded ${game.title} for you. Enjoy playing!`);
+            }
+            
+            // Initialize the game
+            if (gameId === 'memory') {
+                initMemoryGame();
+            } else if (gameId === 'colorMatch') {
+                initColorMatch();
+            }
+            
+            // Update chat state
+            chatState = 'playing';
+        }
+
+        // ===== BREATHING GAME =====
+        function startBreathing() {
+            const circle = document.getElementById('breathingCircle');
+            let phase = 'inhale';
+            let phaseTime = 0;
+            
+            // Clear any existing interval
+            stopBreathing();
+            
+            // Start breathing cycle
+            breathingInterval = setInterval(() => {
+                phaseTime++;
+                
+                if (phase === 'inhale') {
+                    circle.textContent = 'Inhale';
+                    circle.className = 'breathing-circle inhale';
+                    
+                    if (phaseTime >= 4) {
+                        phase = 'hold';
+                        phaseTime = 0;
+                    }
+                } else if (phase === 'hold') {
+                    circle.textContent = 'Hold';
+                    circle.className = 'breathing-circle hold';
+                    
+                    if (phaseTime >= 4) {
+                        phase = 'exhale';
+                        phaseTime = 0;
+                    }
+                } else if (phase === 'exhale') {
+                    circle.textContent = 'Exhale';
+                    circle.className = 'breathing-circle exhale';
+                    
+                    if (phaseTime >= 4) {
+                        phase = 'inhale';
+                        phaseTime = 0;
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopBreathing() {
+            if (breathingInterval) {
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+            }
+            
+            const circle = document.getElementById('breathingCircle');
+            circle.textContent = 'Ready';
+            circle.className = 'breathing-circle';
+        }
+
+        // ===== MEMORY GAME =====
+        function initMemoryGame() {
+            // Reset game state
+            memoryCards = [];
+            flippedCards = [];
+            memoryMoves = 0;
+            memoryMatches = 0;
+            
+            // Create card pairs
+            const emojis = ['🌟', '🎈', '🌺', '🍀', '🎨', '🎵', '🌈', '🦋'];
+            const cardPairs = [...emojis, ...emojis];
+            
+            // Shuffle cards
+            for (let i = cardPairs.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cardPairs[i], cardPairs[j]] = [cardPairs[j], cardPairs[i]];
+            }
+            
+            // Create card objects
+            memoryCards = cardPairs.map((emoji, index) => ({
+                id: index,
+                emoji: emoji,
+                flipped: false,
+                matched: false
+            }));
+            
+            // Update UI
+            updateMemoryUI();
+        }
+
+        function updateMemoryUI() {
+            const grid = document.getElementById('memoryGrid');
+            
+            // Render cards
+            grid.innerHTML = memoryCards.map(card => `
+                <div class="memory-card ${card.flipped ? 'flipped' : ''} ${card.matched ? 'matched' : ''}" 
+                     onclick="flipMemoryCard(${card.id})">
+                    ${card.flipped || card.matched ? card.emoji : ''}
+                </div>
+            `).join('');
+            
+            // Update score
+            document.getElementById('memoryMoves').textContent = memoryMoves;
+            document.getElementById('memoryMatches').textContent = memoryMatches;
+            document.getElementById('memoryTotal').textContent = memoryCards.length / 2;
+            
+            // Check for win
+            if (memoryMatches === memoryCards.length / 2) {
+                setTimeout(() => {
+                    alert(`🎉 Congratulations! You completed the game in ${memoryMoves} moves!`);
+                }, 500);
+            }
+        }
+
+        function flipMemoryCard(cardId) {
+            const card = memoryCards.find(c => c.id === cardId);
+            
+            // Can't flip if already flipped or matched
+            if (card.flipped || card.matched) return;
+            
+            // Can't flip if already 2 cards are flipped
+            if (flippedCards.length >= 2) return;
+            
+            // Flip the card
+            card.flipped = true;
+            flippedCards.push(card);
+            
+            // Update UI
+            updateMemoryUI();
+            
+            // Check for match if 2 cards are flipped
+            if (flippedCards.length === 2) {
+                memoryMoves++;
+                
+                if (flippedCards[0].emoji === flippedCards[1].emoji) {
+                    // Match found
+                    flippedCards[0].matched = true;
+                    flippedCards[1].matched = true;
+                    memoryMatches++;
+                    flippedCards = [];
+                    
+                    updateMemoryUI();
+                } else {
+                    // No match, flip back after delay
+                    setTimeout(() => {
+                        flippedCards[0].flipped = false;
+                        flippedCards[1].flipped = false;
+                        flippedCards = [];
+                        updateMemoryUI();
+                    }, 1000);
+                }
+            }
+        }
+
+        // ===== COLOR MATCH GAME =====
+        function initColorMatch() {
+            // Get high score
+            colorHighScore = parseInt(localStorage.getItem('colorHighScore') || '0');
+            document.getElementById('colorHighScore').textContent = colorHighScore;
+            
+            // Reset score
+            colorScore = 0;
+            document.getElementById('colorScore').textContent = colorScore;
+            
+            // Generate new round
+            generateColorRound();
+        }
+
+        function generateColorRound() {
+            const colors = [
+                { name: 'Red', value: '#ef4444' },
+                { name: 'Blue', value: '#3b82f6' },
+                { name: 'Green', value: '#10b981' },
+                { name: 'Yellow', value: '#f59e0b' },
+                { name: 'Purple', value: '#8b5cf6' },
+                { name: 'Pink', value: '#ec4899' }
+            ];
+            
+            // Select random color for text
+            const textColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Select random color name (may be different from text color)
+            const colorNames = colors.map(c => c.name);
+            const colorName = colorNames[Math.floor(Math.random() * colorNames.length)];
+            
+            // Store current round data
+            currentColorText = colorName;
+            currentColorWord = textColor.value;
+            
+            // Display the word with the text color
+            const wordElement = document.getElementById('colorWord');
+            wordElement.textContent = colorName;
+            wordElement.style.color = textColor.value;
+            
+            // Create color options (include the correct answer)
+            const options = [textColor.value];
+            
+            // Add random wrong options
+            while (options.length < 4) {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)].value;
+                if (!options.includes(randomColor)) {
+                    options.push(randomColor);
+                }
+            }
+            
+            // Shuffle options
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            
+            // Render color buttons
+            const optionsHtml = options.map(color => `
+                <button class="color-btn" style="background-color: ${color};" 
+                        onclick="checkColorMatch('${color}')"></button>
+            `).join('');
+            
+            document.getElementById('colorOptions').innerHTML = optionsHtml;
+        }
+
+        function checkColorMatch(selectedColor) {
+            if (selectedColor === currentColorWord) {
+                // Correct answer
+                colorScore++;
+                document.getElementById('colorScore').textContent = colorScore;
+                
+                // Check for new high score
+                if (colorScore > colorHighScore) {
+                    colorHighScore = colorScore;
+                    localStorage.setItem('colorHighScore', colorHighScore.toString());
+                    document.getElementById('colorHighScore').textContent = colorHighScore;
+                }
+                
+                // Generate new round
+                generateColorRound();
+            } else {
+                // Wrong answer
+                document.getElementById('colorScore').textContent = 'Game Over!';
+                
+                setTimeout(() => {
+                    if (confirm(`Game Over! Your score: ${colorScore}. Play again?`)) {
+                        initColorMatch();
+                    }
+                }, 500);
+            }
+        }
+
+        // ===== HOME STATS =====
+        function updateHomeStats() {
+            const entries = getEntries();
+            const focusData = getFocusData();
+            
+            document.getElementById('homeEntryCount').textContent = entries.length;
+            document.getElementById('homeFocusCount').textContent = focusData.sessions;
+            document.getElementById('homeStreak').textContent = focusData.streak;
+        }
+
+        // ===== DEMO & RESET =====
+        function populateDemoData() {
+            if (!confirm('Load demo data? This will add 7 sample entries.')) return;
+
+            const demoEntries = [
+                { text: 'Had a great day at work! Finished my project early and got positive feedback.', mood: 'Happy', score: 75, emoji: '😊' },
+                { text: 'Feeling calm and peaceful after my morning meditation. Ready for the day.', mood: 'Calm', score: 45, emoji: '😌' },
+                { text: 'Not much happening today. Just going through the motions.', mood: 'Neutral', score: 0, emoji: '😐' },
+                { text: 'A bit stressed about the upcoming deadline. Need to organize my tasks better.', mood: 'Stressed', score: -35, emoji: '😰' },
+                { text: 'Feeling overwhelmed with everything on my plate. Need to take a break.', mood: 'Anxious', score: -60, emoji: '😫' },
+                { text: 'Grateful for my friends and family. Had a wonderful dinner together.', mood: 'Happy', score: 80, emoji: '😊' },
+                { text: 'Finished a great book today. Feeling inspired and content.', mood: 'Calm', score: 50, emoji: '😌' }
+            ];
+
+            const existingEntries = getEntries();
+            const now = Date.now();
+            
+            demoEntries.forEach((entry, index) => {
+                existingEntries.push({
+                    id: now + index,
+                    date: new Date(now - (6 - index) * 86400000).toISOString(), // Last 7 days
+                    text: entry.text,
+                    mood: entry.mood,
+                    score: entry.score,
+                    emoji: entry.emoji
+                });
+            });
+
+            localStorage.setItem('mindverse_entries', JSON.stringify(existingEntries));
+            
+            // Add some focus data
+            saveFocusData({ sessions: 12, streak: 3, totalMinutes: 250, lastDate: new Date().toDateString() });
+            localStorage.setItem('mindverse_growth', '15');
+
+            alert('✨ Demo data loaded! Check out your Universe and Games!');
+            updateHomeStats();
+            if (currentSection === 'journal') renderJournal();
+            if (currentSection === 'universe') renderUniverse();
+        }
+
+        function resetAllData() {
+            if (!confirm('Reset all data? This cannot be undone!')) return;
+
+            localStorage.clear();
+            alert('All data has been reset.');
+            location.reload();
+        }
+
+        // ===== INITIALIZE =====
+        window.onload = () => {
+            updateHomeStats();
+            updateTimerDisplay();
+        };
+    </script>
+</body>
+</html>
