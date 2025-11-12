@@ -1,22 +1,33 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindVerse - AI-Powered Self-Discovery Universe</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* ===== CSS VARIABLES FOR THEMING ===== */
+        /* ===== CSS VARIABLES ===== */
         :root {
-            --bg-dark: #0a0e27;
-            --bg-card: #1a1f3a;
-            --accent-cyan: #00f0ff;
-            --accent-magenta: #ff00ff;
-            --accent-purple: #8b5cf6;
-            --text-primary: #e0e7ff;
-            --text-secondary: #a0aec0;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #b8c0e0;
+            --text-muted: #8892b0;
             --success: #10b981;
             --warning: #f59e0b;
-            --danger: #ef4444;
+            --error: #ef4444;
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
         * {
@@ -26,31 +37,496 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0933 100%);
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-gradient);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: var(--dark-gradient);
+        }
+
+        .floating-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            top: 50%;
+            right: -125px;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            bottom: -100px;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        .orb4 {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #fa709a, #fee140);
+            top: 20%;
+            left: 60%;
+            animation-delay: 15s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, -100px) rotate(90deg); }
+            50% { transform: translate(-100px, 100px) rotate(180deg); }
+            75% { transform: translate(50px, 50px) rotate(270deg); }
+        }
+
+        /* ===== LOGIN PAGE ===== */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .login-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .login-content {
+            text-align: left;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .brand-section {
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .feature-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .login-form-section {
+            animation: slideInRight 1s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            background: var(--glass-bg);
+            padding: 0 1rem;
+            color: var(--text-muted);
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-google {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-google:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-demo {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--error);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== MAIN APPLICATION ===== */
+        .main-app {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .main-app.active {
+            display: block;
         }
 
         /* ===== NAVIGATION ===== */
         nav {
-            background: rgba(26, 31, 58, 0.8);
-            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
             padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--accent-cyan);
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow-xl);
         }
 
-        .logo {
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-brand i {
+            font-size: 1.8rem;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -58,25 +534,82 @@
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 0.5rem;
             list-style: none;
         }
 
-        .nav-links button {
+        .nav-link {
             background: none;
             border: none;
             color: var(--text-secondary);
             cursor: pointer;
             font-size: 0.95rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
             transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
         }
 
-        .nav-links button:hover,
-        .nav-links button.active {
-            color: var(--accent-cyan);
-            background: rgba(0, 240, 255, 0.1);
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--text-primary);
+            background: var(--primary-gradient);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .user-email {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
         }
 
         /* ===== MAIN CONTAINER ===== */
@@ -88,141 +621,233 @@
 
         .section {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeInUp 0.6s ease-out;
         }
 
         .section.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ===== CARDS ===== */
         .card {
-            background: var(--bg-card);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s ease;
         }
 
-        .card h2 {
-            color: var(--accent-cyan);
-            margin-bottom: 1rem;
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
             font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
         }
 
         /* ===== BUTTONS ===== */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 240, 255, 0.4);
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .btn-secondary {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--accent-purple);
-            border: 1px solid var(--accent-purple);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
             background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         /* ===== MOOD ANALYZER ===== */
         .emoji-selector {
             display: flex;
             gap: 1rem;
-            margin: 1rem 0;
+            margin: 2rem 0;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .emoji-btn {
-            font-size: 2rem;
-            padding: 1rem;
-            background: rgba(139, 92, 246, 0.1);
+            font-size: 2.5rem;
+            padding: 1.25rem;
+            background: var(--glass-bg);
             border: 2px solid transparent;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .emoji-btn:hover {
-            border-color: var(--accent-cyan);
+            border-color: #667eea;
             transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .emoji-btn:active {
+            transform: scale(0.95);
         }
 
         textarea {
             width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(139, 92, 246, 0.5);
-            border-radius: 8px;
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             color: var(--text-primary);
             font-size: 1rem;
-            min-height: 120px;
+            min-height: 150px;
             resize: vertical;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         textarea:focus {
             outline: none;
-            border-color: var(--accent-cyan);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        textarea::placeholder {
+            color: var(--text-muted);
         }
 
         .mood-result {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: rgba(0, 240, 255, 0.1);
-            border-left: 4px solid var(--accent-cyan);
-            border-radius: 8px;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ===== UNIVERSE CANVAS ===== */
         #universeCanvas {
             width: 100%;
             height: 600px;
-            border-radius: 16px;
+            border-radius: 20px;
             background: radial-gradient(circle at center, #1a0933 0%, #0a0e27 100%);
             cursor: pointer;
+            box-shadow: var(--shadow-2xl);
         }
 
         .universe-info {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 8px;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
         }
 
         /* ===== FOCUS MODE ===== */
         .timer-display {
-            font-size: 4rem;
+            font-size: 5rem;
             text-align: center;
-            margin: 2rem 0;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta));
+            margin: 3rem 0;
+            font-weight: 700;
+            background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
         }
 
         .timer-controls {
@@ -232,297 +857,91 @@
             flex-wrap: wrap;
         }
 
-        .focus-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(139, 92, 246, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
+        .session-selector {
             text-align: center;
+            margin: 2rem 0;
         }
 
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--accent-cyan);
+        .session-selector select {
+            padding: 0.75rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
         }
 
         /* ===== CAREER QUIZ ===== */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
         .quiz-question {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .quiz-question h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
 
         .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+            display: grid;
+            gap: 1rem;
         }
 
         .quiz-option {
-            padding: 1rem;
-            background: rgba(139, 92, 246, 0.1);
+            padding: 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
             border: 2px solid transparent;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
         .quiz-option:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(0, 240, 255, 0.1);
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
         }
 
         .quiz-option.selected {
-            border-color: var(--accent-cyan);
-            background: rgba(0, 240, 255, 0.2);
-        }
-
-        .career-results {
-            margin-top: 2rem;
-        }
-
-        .career-card {
-            background: rgba(139, 92, 246, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--accent-cyan);
-        }
-
-        /* ===== JOURNAL ===== */
-        .journal-entry {
-            background: rgba(139, 92, 246, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border-left: 4px solid;
-        }
-
-        .journal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .journal-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .mood-chart {
-            margin-top: 2rem;
-        }
-
-        .chart-bar {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .chart-label {
-            width: 100px;
-            font-size: 0.9rem;
-        }
-
-        .chart-bar-fill {
-            height: 30px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-            border-radius: 4px;
-            transition: width 0.5s ease;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
         }
 
         /* ===== GAMES SECTION ===== */
-        .game-recommendations {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .game-card {
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
-        }
-
-        .game-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .game-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent-cyan);
-        }
-
-        .game-description {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .game-container {
-            margin-top: 2rem;
-            background: rgba(26, 31, 58, 0.5);
-            border-radius: 16px;
-            padding: 2rem;
-            display: none;
-        }
-
-        .game-container.active {
-            display: block;
-        }
-
-        /* Breathing Game */
-        .breathing-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-cyan), var(--accent-purple));
-            margin: 2rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            transition: all 4s ease-in-out;
-        }
-
-        .breathing-circle.inhale {
-            transform: scale(1.5);
-        }
-
-        .breathing-circle.hold {
-            transform: scale(1.5);
-        }
-
-        .breathing-circle.exhale {
-            transform: scale(1);
-        }
-
-        .breathing-controls {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        /* Memory Game */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            max-width: 500px;
-            margin: 2rem auto;
-        }
-
-        .memory-card {
-            aspect-ratio: 1;
-            background: var(--bg-card);
-            border: 2px solid var(--accent-purple);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .memory-card:hover {
-            transform: scale(1.05);
-        }
-
-        .memory-card.flipped {
-            background: rgba(0, 240, 255, 0.2);
-            border-color: var(--accent-cyan);
-        }
-
-        .memory-card.matched {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: var(--success);
-            cursor: default;
-        }
-
-        /* Color Match Game */
-        .color-match-container {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .color-word {
-            font-size: 4rem;
-            font-weight: bold;
-            margin: 2rem 0;
-            padding: 1rem;
-            border-radius: 12px;
-            background: rgba(26, 31, 58, 0.5);
-        }
-
-        .color-options {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .color-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .color-btn:hover {
-            transform: scale(1.1);
-            border-color: white;
-        }
-
-        .game-score {
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 1rem 0;
-        }
-
-        /* AI Chat Interface */
         .ai-chat {
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .chat-container {
-            background: rgba(26, 31, 58, 0.5);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             padding: 1.5rem;
-            height: 400px;
+            height: 500px;
             overflow-y: auto;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
         }
 
         .chat-message {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: flex-start;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .chat-message.ai {
@@ -535,19 +954,23 @@
 
         .message-bubble {
             max-width: 70%;
-            padding: 1rem;
-            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
             word-wrap: break-word;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .ai .message-bubble {
-            background: rgba(139, 92, 246, 0.2);
-            border-bottom-left-radius: 4px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-bottom-left-radius: 6px;
         }
 
         .user .message-bubble {
-            background: rgba(0, 240, 255, 0.2);
-            border-bottom-right-radius: 4px;
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-bottom-right-radius: 6px;
             margin-left: auto;
         }
 
@@ -558,26 +981,29 @@
 
         .chat-input {
             flex: 1;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(139, 92, 246, 0.5);
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
             color: var(--text-primary);
             font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
         }
 
         .chat-input:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .typing-indicator {
             display: none;
-            padding: 0.5rem 1rem;
-            background: rgba(139, 92, 246, 0.2);
-            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 18px;
             width: fit-content;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .typing-indicator.active {
@@ -589,7 +1015,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--accent-cyan);
+            background-color: #667eea;
             margin: 0 2px;
             animation: typing 1.4s infinite;
         }
@@ -611,30 +1037,266 @@
             }
         }
 
-        .mood-emoji-options {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
+        .game-recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .mood-emoji-option {
-            font-size: 2.5rem;
-            padding: 1rem;
-            background: rgba(139, 92, 246, 0.1);
-            border: 2px solid transparent;
-            border-radius: 12px;
+        .game-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
             cursor: pointer;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .game-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* ===== JOURNAL ===== */
+        .journal-entry {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid;
             transition: all 0.3s ease;
         }
 
-        .mood-emoji-option:hover {
-            border-color: var(--accent-cyan);
-            transform: scale(1.1);
+        .journal-entry:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-xl);
         }
 
-        /* ===== CBT PROMPTS ===== */
+        .journal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .journal-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mood-chart {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-label {
+            width: 120px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .chart-bar-fill {
+            height: 35px;
+            background: var(--accent-gradient);
+            border-radius: 8px;
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .chart-value {
+            margin-left: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ===== GAME SPECIFIC STYLES ===== */
+        .game-container {
+            margin-top: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .game-container.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .breathing-circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            transition: all 4s ease-in-out;
+            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.5);
+            box-shadow: 0 15px 50px rgba(79, 172, 254, 0.6);
+        }
+
+        .breathing-circle.hold {
+            transform: scale(1.5);
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(1);
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: var(--glass-bg);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .memory-card.flipped {
+            background: rgba(79, 172, 254, 0.2);
+            border-color: #4facfe;
+        }
+
+        .memory-card.matched {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            cursor: default;
+        }
+
+        .color-match-container {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .color-word {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .color-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .game-score {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 1.5rem 0;
+            font-weight: 600;
+        }
+
+        /* ===== CBT OVERLAY ===== */
         .cbt-overlay {
             position: fixed;
             top: 0;
@@ -646,6 +1308,7 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            backdrop-filter: blur(5px);
         }
 
         .cbt-overlay.active {
@@ -653,352 +1316,642 @@
         }
 
         .cbt-modal {
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
             max-width: 600px;
             width: 90%;
-            border: 2px solid var(--accent-purple);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-2xl);
+            animation: modalSlideIn 0.3s ease-out;
         }
 
-        /* ===== RESPONSIVE ===== */
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .login-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .login-content {
+                text-align: center;
+            }
+
+            .features {
+                align-items: center;
+            }
+
+            .feature-item {
+                max-width: 400px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
             .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .user-section {
+                flex-direction: column;
                 gap: 0.5rem;
             }
-            .nav-links button {
-                padding: 0.5rem;
-                font-size: 0.85rem;
+
+            .user-info {
+                align-items: center;
             }
+
             .timer-display {
                 font-size: 3rem;
             }
+
             .memory-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
+
             .message-bubble {
                 max-width: 85%;
+            }
+
+            .login-card {
+                padding: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .emoji-btn {
+                font-size: 2rem;
+                padding: 1rem;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .color-btn {
+                width: 80px;
+                height: 80px;
+            }
+
+            .game-recommendations {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- NAVIGATION -->
-    <nav>
-        <div class="logo">✨ MindVerse</div>
-        <ul class="nav-links">
-            <li><button onclick="showSection('home')" class="active">Home</button></li>
-            <li><button onclick="showSection('mood')">Mood Analyzer</button></li>
-            <li><button onclick="showSection('universe')">Universe</button></li>
-            <li><button onclick="showSection('focus')">Focus</button></li>
-            <li><button onclick="showSection('career')">Career</button></li>
-            <li><button onclick="showSection('games')">Games</button></li>
-            <li><button onclick="showSection('journal')">Journal</button></li>
-        </ul>
-    </nav>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="floating-orbs">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="orb orb4"></div>
+    </div>
 
-    <div class="container">
-        <!-- HOME SECTION -->
-        <section id="home" class="section active">
-            <div class="card">
-                <h2>Welcome to MindVerse 🌌</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                    Your AI-powered companion for self-discovery, emotional awareness, and personal growth. 
-                    Track your moods, visualize your emotional universe, boost productivity, and explore career paths—all in one cosmic experience.
-                </p>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="showSection('mood')">Start Mood Check</button>
-                    <button class="btn btn-secondary" onclick="populateDemoData()">Load Demo Data</button>
-                    <button class="btn btn-danger" onclick="resetAllData()">Reset Data</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Quick Stats</h2>
-                <div class="focus-stats">
-                    <div class="stat-card">
-                        <div class="stat-value" id="homeEntryCount">0</div>
-                        <div>Journal Entries</div>
+    <!-- ===== LOGIN PAGE ===== -->
+    <div id="loginPage" class="login-container">
+        <div class="login-grid">
+            <!-- Left Side - Brand Content -->
+            <div class="login-content">
+                <div class="brand-section">
+                    <div class="logo">
+                        <div class="logo-icon">🧠</div>
+                        <div class="brand-name">MindVerse</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="homeFocusCount">0</div>
-                        <div>Focus Sessions</div>
+                    <h1 class="tagline">Your AI-powered self-discovery universe</h1>
+                </div>
+
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-text">
+                            <h3>AI Mood Analysis</h3>
+                            <p>Advanced sentiment analysis to understand your emotional patterns</p>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="homeStreak">0</div>
-                        <div>Day Streak</div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌍</div>
+                        <div class="feature-text">
+                            <h3>Emotional Universe</h3>
+                            <p>Visualize your feelings as an interactive cosmic journey</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- MOOD ANALYZER SECTION -->
-        <section id="mood" class="section">
-            <div class="card">
-                <h2>Mood Analyzer 💭</h2>
-                <p style="margin-bottom: 1rem;">How are you feeling today? Write about it or select an emoji:</p>
-                
-                <div class="emoji-selector">
-                    <button class="emoji-btn" onclick="quickMood('😊', 'Happy')">😊</button>
-                    <button class="emoji-btn" onclick="quickMood('😌', 'Calm')">😌</button>
-                    <button class="emoji-btn" onclick="quickMood('😐', 'Neutral')">😐</button>
-                    <button class="emoji-btn" onclick="quickMood('😰', 'Anxious')">😰</button>
-                    <button class="emoji-btn" onclick="quickMood('😫', 'Stressed')">😫</button>
-                    <button class="emoji-btn" onclick="quickMood('😴', 'Bored')">😴</button>
-                </div>
-
-                <textarea id="moodText" placeholder="Or write about your feelings in detail..."></textarea>
-                
-                <div style="margin-top: 1rem;">
-                    <button class="btn btn-primary" onclick="analyzeMood()">Analyze Mood</button>
-                </div>
-
-                <div id="moodResult" style="display: none;" class="mood-result">
-                    <h3>Analysis Result</h3>
-                    <p><strong>Mood:</strong> <span id="moodLabel"></span> <span id="moodEmoji"></span></p>
-                    <p><strong>Score:</strong> <span id="moodScore"></span></p>
-                    <p id="moodSummary"></p>
-                    <div style="margin-top: 1rem;">
-                        <button class="btn btn-primary" onclick="showSection('games')">Try Mood-Based Games</button>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎮</div>
+                        <div class="feature-text">
+                            <h3>Therapeutic Games</h3>
+                            <p>Personalized games designed for your mental wellness</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-text">
+                            <h3>Career Guidance</h3>
+                            <p>Discover your perfect career path with RAISEC analysis</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- UNIVERSE SECTION -->
-        <section id="universe" class="section">
-            <div class="card">
-                <h2>Your Emotional Universe 🌍</h2>
-                <p style="margin-bottom: 1rem;">Each planet represents a day's emotional state. Click to explore!</p>
-                <canvas id="universeCanvas"></canvas>
-                <div class="universe-info">
-                    <p><strong>Planet Growth Level:</strong> <span id="planetGrowth">0</span> 🌱</p>
-                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                        Complete focus sessions to grow your planets!
+            <!-- Right Side - Login Form -->
+            <div class="login-form-section">
+                <div class="login-card">
+                    <div class="login-header">
+                        <h2 class="login-title">Welcome Back</h2>
+                        <p class="login-subtitle">Enter your mind space and continue your journey</p>
+                    </div>
+
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="form-input" 
+                                placeholder="you@example.com"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <div class="password-container">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    class="form-input" 
+                                    placeholder="Enter your password"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="eyeIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="loginMessage"></div>
+
+                        <button type="submit" class="btn btn-primary" id="loginBtn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span id="btnText">Sign In</span>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>OR CONTINUE WITH</span>
+                    </div>
+
+                    <button class="btn btn-google" onclick="loginWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        <span>Continue with Google</span>
+                    </button>
+
+                    <button class="btn btn-demo" onclick="quickDemo()" style="margin-top: 1rem;">
+                        <i class="fas fa-rocket"></i>
+                        <span>Try Demo Mode</span>
+                    </button>
+
+                    <p style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+                        Don't have an account? <a href="#" style="color: #667eea; text-decoration: none; font-weight: 500;">Sign up</a>
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div id="planetDetail" class="card" style="display: none;">
-                <h2>Planet Details</h2>
-                <div id="planetDetailContent"></div>
-                <button class="btn btn-secondary" onclick="closePlanetDetail()">Close</button>
-            </div>
-        </section>
 
-        <!-- FOCUS MODE SECTION -->
-        <section id="focus" class="section">
-            <div class="card">
-                <h2>Focus Mode 🎯</h2>
-                <p style="margin-bottom: 1rem;">Boost productivity with Pomodoro technique. Complete sessions to grow your universe!</p>
-                
-                <div class="timer-display" id="timerDisplay">25:00</div>
-                
-                <div class="timer-controls">
-                    <button class="btn btn-primary" onclick="startFocusSession()">Start Focus</button>
-                    <button class="btn btn-secondary" onclick="pauseTimer()">Pause</button>
-                    <button class="btn btn-danger" onclick="resetTimer()">Reset</button>
+    <div id="mainApp" class="main-app">
+    
+        <nav>
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-brain"></i>
+                    <span>MindVerse</span>
                 </div>
-
-                <div style="margin-top: 2rem; text-align: center;">
-                    <label>Session Length: </label>
-                    <select id="sessionLength" style="padding: 0.5rem; border-radius: 4px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--accent-purple);">
-                        <option value="10">Quick (10 min)</option>
-                        <option value="15">Short (15 min)</option>
-                        <option value="25" selected>Standard (25 min)</option>
-                    </select>
-                </div>
-
-                <div class="focus-stats">
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalSessions">0</div>
-                        <div>Total Sessions</div>
+                <ul class="nav-links">
+                    <li><button class="nav-link active" onclick="showSection('home')">Home</button></li>
+                    <li><button class="nav-link" onclick="showSection('mood')">Mood</button></li>
+                    <li><button class="nav-link" onclick="showSection('universe')">Universe</button></li>
+                    <li><button class="nav-link" onclick="showSection('focus')">Focus</button></li>
+                    <li><button class="nav-link" onclick="showSection('career')">Career</button></li>
+                    <li><button class="nav-link" onclick="showSection('games')">Games</button></li>
+                    <li><button class="nav-link" onclick="showSection('journal')">Journal</button></li>
+                </ul>
+                <div class="user-section">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">User</div>
+                        <div class="user-email" id="userEmail">user@example.com</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="focusStreak">0</div>
-                        <div>Current Streak</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalMinutes">0</div>
-                        <div>Total Minutes</div>
-                    </div>
+                    <button class="logout-button" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
             </div>
-        </section>
+        </nav>
 
-        <!-- CAREER SECTION -->
-        <section id="career" class="section">
-            <div class="card">
-                <h2>Career Pathfinder 🚀</h2>
-                <p style="margin-bottom: 2rem;">Answer a few questions to discover your ideal career paths based on RAISEC personality types.</p>
-                
-                <div id="careerQuiz">
-                    <div class="quiz-question">
-                        <h3>1. What energizes you most?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectOption(0, 'R')">🔧 Working with tools and machines</div>
-                            <div class="quiz-option" onclick="selectOption(0, 'I')">🔬 Solving complex problems and research</div>
-                            <div class="quiz-option" onclick="selectOption(0, 'A')">🎨 Creating and expressing ideas</div>
-                            <div class="quiz-option" onclick="selectOption(0, 'S')">🤝 Helping and teaching others</div>
-                            <div class="quiz-option" onclick="selectOption(0, 'E')">📊 Leading teams and making decisions</div>
-                            <div class="quiz-option" onclick="selectOption(0, 'C')">📋 Organizing and managing data</div>
-                        </div>
+        <div class="container">
+        
+            <section id="home" class="section active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Welcome to Your MindVerse 🌌</h2>
+                        <p class="card-subtitle">
+                            Your personal AI companion for emotional wellness, self-discovery, and mental growth
+                        </p>
                     </div>
-
-                    <div class="quiz-question">
-                        <h3>2. What's your preferred work environment?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectOption(1, 'R')">🏗️ Hands-on, physical workspaces</div>
-                            <div class="quiz-option" onclick="selectOption(1, 'I')">🧪 Laboratories and research facilities</div>
-                            <div class="quiz-option" onclick="selectOption(1, 'A')">🎭 Creative studios and flexible spaces</div>
-                            <div class="quiz-option" onclick="selectOption(1, 'S')">🏥 Community-focused environments</div>
-                            <div class="quiz-option" onclick="selectOption(1, 'E')">🏢 Dynamic business settings</div>
-                            <div class="quiz-option" onclick="selectOption(1, 'C')">💻 Structured office environments</div>
-                        </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="showSection('mood')">
+                            <i class="fas fa-smile"></i> Start Mood Check
+                        </button>
+                        <button class="btn btn-secondary" onclick="populateDemoData()">
+                            <i class="fas fa-database"></i> Load Demo Data
+                        </button>
+                        <button class="btn btn-danger" onclick="resetAllData()">
+                            <i class="fas fa-trash"></i> Reset Data
+                        </button>
                     </div>
-
-                    <div class="quiz-question">
-                        <h3>3. What skills do you excel at?</h3>
-                        <div class="quiz-options">
-                            <div class="quiz-option" onclick="selectOption(2, 'R')">⚙️ Technical and mechanical skills</div>
-                            <div class="quiz-option" onclick="selectOption(2, 'I')">🧠 Analytical and critical thinking</div>
-                            <div class="quiz-option" onclick="selectOption(2, 'A')">✨ Innovation and imagination</div>
-                            <div class="quiz-option" onclick="selectOption(2, 'S')">💬 Empathy and communication</div>
-                            <div class="quiz-option" onclick="selectOption(2, 'E')">📈 Persuasion and negotiation</div>
-                            <div class="quiz-option" onclick="selectOption(2, 'C')">📊 Attention to detail and organization</div>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary" onclick="calculateCareer()" style="margin-top: 2rem;">Get Career Suggestions</button>
                 </div>
 
-                <div id="careerResults" class="career-results" style="display: none;"></div>
-            </div>
-        </section>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Your Journey Stats</h3>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="homeEntryCount">0</div>
+                            <div class="stat-label">Journal Entries</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="homeFocusCount">0</div>
+                            <div class="stat-label">Focus Sessions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="homeStreak">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="homeGrowth">0</div>
+                            <div class="stat-label">Planet Growth</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- GAMES SECTION -->
-        <section id="games" class="section">
-            <div class="card">
-                <h2>AI Game Assistant 🎮</h2>
-                <p style="margin-bottom: 1.5rem;">Let me help you find the perfect game based on your current mood!</p>
-                
-                <div class="ai-chat">
-                    <div class="chat-container" id="chatContainer">
-                        <div class="chat-message ai">
-                            <div class="message-bubble">
-                                Hello! I'm your AI game assistant. I'd love to recommend some games for you, but first, could you tell me how you're feeling today? 😊
+
+            <section id="mood" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Mood Analyzer 💭</h2>
+                        <p class="card-subtitle">How are you feeling today? Let AI help you understand your emotions</p>
+                    </div>
+                    
+                    <div class="emoji-selector">
+                        <button class="emoji-btn" onclick="quickMood('😊', 'Happy')">😊</button>
+                        <button class="emoji-btn" onclick="quickMood('😌', 'Calm')">😌</button>
+                        <button class="emoji-btn" onclick="quickMood('😐', 'Neutral')">😐</button>
+                        <button class="emoji-btn" onclick="quickMood('😰', 'Anxious')">😰</button>
+                        <button class="emoji-btn" onclick="quickMood('😫', 'Stressed')">😫</button>
+                        <button class="emoji-btn" onclick="quickMood('😴', 'Bored')">😴</button>
+                    </div>
+
+                    <textarea id="moodText" placeholder="Or write about your feelings in detail..."></textarea>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary" onclick="analyzeMood()">
+                            <i class="fas fa-brain"></i> Analyze Mood
+                        </button>
+                    </div>
+
+                    <div id="moodResult" style="display: none;" class="mood-result">
+                        <h3><i class="fas fa-chart-line"></i> Analysis Result</h3>
+                        <p><strong>Mood:</strong> <span id="moodLabel"></span> <span id="moodEmoji"></span></p>
+                        <p><strong>Score:</strong> <span id="moodScore"></span></p>
+                        <p id="moodSummary"></p>
+                        <div style="margin-top: 1.5rem;">
+                            <button class="btn btn-primary" onclick="showSection('games')">
+                                <i class="fas fa-gamepad"></i> Try Mood-Based Games
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+           
+            <section id="universe" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Your Emotional Universe 🌍</h2>
+                        <p class="card-subtitle">Each planet represents a day's emotional state. Click to explore!</p>
+                    </div>
+                    
+                    <canvas id="universeCanvas"></canvas>
+                    
+                    <div class="universe-info">
+                        <p><strong>🌱 Planet Growth Level:</strong> <span id="planetGrowth">0</span></p>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted);">
+                            Complete focus sessions to grow your planets and expand your universe!
+                        </p>
+                    </div>
+                </div>
+
+                <div id="planetDetail" class="card" style="display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title">Planet Details</h3>
+                    </div>
+                    <div id="planetDetailContent"></div>
+                    <button class="btn btn-secondary" onclick="closePlanetDetail()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </section>
+
+
+            <section id="focus" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Focus Mode 🎯</h2>
+                        <p class="card-subtitle">Boost productivity with Pomodoro technique and grow your universe</p>
+                    </div>
+                    
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    
+                    <div class="timer-controls">
+                        <button class="btn btn-primary" onclick="startFocusSession()">
+                            <i class="fas fa-play"></i> Start Focus
+                        </button>
+                        <button class="btn btn-secondary" onclick="pauseTimer()">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="btn btn-danger" onclick="resetTimer()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="session-selector">
+                        <label>Session Length: </label>
+                        <select id="sessionLength">
+                            <option value="10">Quick (10 min)</option>
+                            <option value="15">Short (15 min)</option>
+                            <option value="25" selected>Standard (25 min)</option>
+                            <option value="45">Deep (45 min)</option>
+                        </select>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalSessions">0</div>
+                            <div class="stat-label">Total Sessions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="focusStreak">0</div>
+                            <div class="stat-label">Current Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalMinutes">0</div>
+                            <div class="stat-label">Total Minutes</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CAREER SECTION -->
+            <section id="career" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Career Pathfinder 🚀</h2>
+                        <p class="card-subtitle">Discover your ideal career path with RAISEC personality analysis</p>
+                    </div>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h3>1. What energizes you most?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" onclick="selectOption(0, 'R')">🔧 Working with tools and machines</div>
+                                <div class="quiz-option" onclick="selectOption(0, 'I')">🔬 Solving complex problems and research</div>
+                                <div class="quiz-option" onclick="selectOption(0, 'A')">🎨 Creating and expressing ideas</div>
+                                <div class="quiz-option" onclick="selectOption(0, 'S')">🤝 Helping and teaching others</div>
+                                <div class="quiz-option" onclick="selectOption(0, 'E')">📊 Leading teams and making decisions</div>
+                                <div class="quiz-option" onclick="selectOption(0, 'C')">📋 Organizing and managing data</div>
                             </div>
                         </div>
-                        <div class="typing-indicator" id="typingIndicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+
+                        <div class="quiz-question">
+                            <h3>2. What's your preferred work environment?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" onclick="selectOption(1, 'R')">🏗️ Hands-on, physical workspaces</div>
+                                <div class="quiz-option" onclick="selectOption(1, 'I')">🧪 Laboratories and research facilities</div>
+                                <div class="quiz-option" onclick="selectOption(1, 'A')">🎭 Creative studios and flexible spaces</div>
+                                <div class="quiz-option" onclick="selectOption(1, 'S')">🏥 Community-focused environments</div>
+                                <div class="quiz-option" onclick="selectOption(1, 'E')">🏢 Dynamic business settings</div>
+                                <div class="quiz-option" onclick="selectOption(1, 'C')">💻 Structured office environments</div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <h3>3. What skills do you excel at?</h3>
+                            <div class="quiz-options">
+                                <div class="quiz-option" onclick="selectOption(2, 'R')">⚙️ Technical and mechanical skills</div>
+                                <div class="quiz-option" onclick="selectOption(2, 'I')">🧠 Analytical and critical thinking</div>
+                                <div class="quiz-option" onclick="selectOption(2, 'A')">✨ Innovation and imagination</div>
+                                <div class="quiz-option" onclick="selectOption(2, 'S')">💬 Empathy and communication</div>
+                                <div class="quiz-option" onclick="selectOption(2, 'E')">📈 Persuasion and negotiation</div>
+                                <div class="quiz-option" onclick="selectOption(2, 'C')">📊 Attention to detail and organization</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="calculateCareer()">
+                            <i class="fas fa-chart-pie"></i> Get Career Suggestions
+                        </button>
+                    </div>
+
+                    <div id="careerResults" style="display: none;"></div>
+                </div>
+            </section>
+
+            <!-- GAMES SECTION -->
+            <section id="games" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">AI Game Assistant 🎮</h2>
+                        <p class="card-subtitle">Let me recommend the perfect games based on your current mood</p>
+                    </div>
+                    
+                    <div class="ai-chat">
+                        <div class="chat-container" id="chatContainer">
+                            <div class="chat-message ai">
+                                <div class="message-bubble">
+                                    Hello! I'm your AI game assistant. I'd love to recommend some games for you, but first, could you tell me how you're feeling today? 😊
+                                </div>
+                            </div>
+                            <div class="typing-indicator" id="typingIndicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <input type="text" id="chatInput" class="chat-input" placeholder="Type your response here..." onkeypress="handleChatKeyPress(event)">
+                            <button class="btn btn-primary" onclick="sendChatMessage()">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="chat-input-container">
-                        <input type="text" id="chatInput" class="chat-input" placeholder="Type your response here..." onkeypress="handleChatKeyPress(event)">
-                        <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
+                </div>
+
+                <!-- Game Recommendations -->
+                <div id="gameRecommendationsCard" class="card" style="display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title">Recommended Games For You</h3>
+                    </div>
+                    <div class="game-recommendations" id="gameRecommendations">
+                        <!-- Games will be dynamically loaded here -->
                     </div>
                 </div>
-            </div>
 
-            <!-- Game Recommendations (hidden initially) -->
-            <div id="gameRecommendationsCard" class="card" style="display: none;">
-                <h2>Recommended Games For You</h2>
-                <div class="game-recommendations" id="gameRecommendations">
-                    <!-- Games will be dynamically loaded here -->
+                <!-- Breathing Game -->
+                <div id="breathingGame" class="game-container">
+                    <div class="card-header">
+                        <h3 class="card-title">Breathing Exercise 🧘</h3>
+                        <p class="card-subtitle">Follow the circle to regulate your breathing and reduce anxiety</p>
+                    </div>
+                    
+                    <div class="breathing-circle" id="breathingCircle">Ready</div>
+                    
+                    <div class="timer-controls">
+                        <button class="btn btn-primary" onclick="startBreathing()">
+                            <i class="fas fa-play"></i> Start Exercise
+                        </button>
+                        <button class="btn btn-secondary" onclick="stopBreathing()">
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Breathing Game -->
-            <div id="breathingGame" class="game-container">
-                <h2>Breathing Exercise 🧘</h2>
-                <p style="text-align: center; margin-bottom: 1rem;">Follow the circle to regulate your breathing and reduce anxiety.</p>
-                
-                <div class="breathing-circle" id="breathingCircle">Ready</div>
-                
-                <div class="breathing-controls">
-                    <button class="btn btn-primary" onclick="startBreathing()">Start Exercise</button>
-                    <button class="btn btn-secondary" onclick="stopBreathing()">Stop</button>
-                </div>
-                
-                <div style="margin-top: 2rem; text-align: center; color: var(--text-secondary);">
-                    <p>Instructions: Inhale as the circle expands, hold your breath, then exhale as it contracts.</p>
-                </div>
-            </div>
-
-            <!-- Memory Game -->
-            <div id="memoryGame" class="game-container">
-                <h2>Memory Match 🧩</h2>
-                <p style="text-align: center; margin-bottom: 1rem;">Find all matching pairs to improve focus and memory.</p>
-                
-                <div class="game-score">
-                    <span>Moves: </span><span id="memoryMoves">0</span> | 
-                    <span>Matches: </span><span id="memoryMatches">0</span>/<span id="memoryTotal">8</span>
-                </div>
-                
-                <div class="memory-grid" id="memoryGrid">
-                    <!-- Memory cards will be generated here -->
-                </div>
-                
-                <div style="text-align: center; margin-top: 1rem;">
-                    <button class="btn btn-primary" onclick="initMemoryGame()">New Game</button>
-                </div>
-            </div>
-
-            <!-- Color Match Game -->
-            <div id="colorMatchGame" class="game-container">
-                <h2>Color Match Challenge 🎨</h2>
-                <p style="text-align: center; margin-bottom: 1rem;">Select the color that matches the text, not the word itself!</p>
-                
-                <div class="color-match-container">
+                <!-- Memory Game -->
+                <div id="memoryGame" class="game-container">
+                    <div class="card-header">
+                        <h3 class="card-title">Memory Match 🧩</h3>
+                        <p class="card-subtitle">Find all matching pairs to improve focus and memory</p>
+                    </div>
+                    
                     <div class="game-score">
-                        <span>Score: </span><span id="colorScore">0</span> | 
-                        <span>High Score: </span><span id="colorHighScore">0</span>
+                        <i class="fas fa-mouse-pointer"></i> Moves: <span id="memoryMoves">0</span> | 
+                        <i class="fas fa-check-circle"></i> Matches: <span id="memoryMatches">0</span>/<span id="memoryTotal">8</span>
                     </div>
                     
-                    <div class="color-word" id="colorWord">Loading...</div>
-                    
-                    <div class="color-options" id="colorOptions">
-                        <!-- Color buttons will be generated here -->
+                    <div class="memory-grid" id="memoryGrid">
+                        <!-- Memory cards will be generated here -->
                     </div>
                     
-                    <div style="text-align: center; margin-top: 1rem;">
-                        <button class="btn btn-primary" onclick="initColorMatch()">New Round</button>
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <button class="btn btn-primary" onclick="initMemoryGame()">
+                            <i class="fas fa-redo"></i> New Game
+                        </button>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- JOURNAL SECTION -->
-        <section id="journal" class="section">
-            <div class="card">
-                <h2>Your Journal 📖</h2>
-                <div id="journalList"></div>
-                
+                <!-- Color Match Game -->
+                <div id="colorMatchGame" class="game-container">
+                    <div class="card-header">
+                        <h3 class="card-title">Color Match Challenge 🎨</h3>
+                        <p class="card-subtitle">Select the color that matches the text, not the word itself!</p>
+                    </div>
+                    
+                    <div class="color-match-container">
+                        <div class="game-score">
+                            <i class="fas fa-trophy"></i> Score: <span id="colorScore">0</span> | 
+                            <i class="fas fa-crown"></i> High Score: <span id="colorHighScore">0</span>
+                        </div>
+                        
+                        <div class="color-word" id="colorWord">Loading...</div>
+                        
+                        <div class="color-options" id="colorOptions">
+                            <!-- Color buttons will be generated here -->
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <button class="btn btn-primary" onclick="initColorMatch()">
+                                <i class="fas fa-sync"></i> New Round
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JOURNAL SECTION -->
+            <section id="journal" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Your Journal 📖</h2>
+                        <p class="card-subtitle">Track your emotional journey over time</p>
+                    </div>
+                    <div id="journalList"></div>
+                </div>
+
                 <div class="mood-chart">
-                    <h3>Mood Distribution (Last 7 Entries)</h3>
+                    <div class="card-header">
+                        <h3 class="card-title">Mood Distribution (Last 7 Entries)</h3>
+                    </div>
                     <div id="moodChartBars"></div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 
     <!-- CBT OVERLAY -->
     <div id="cbtOverlay" class="cbt-overlay">
         <div class="cbt-modal">
-            <h2>Quick Mindfulness Check 🧘</h2>
+            <div class="card-header">
+                <h3 class="card-title">Quick Mindfulness Check 🧘</h3>
+            </div>
             <div id="cbtContent"></div>
-            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-                <button class="btn btn-primary" onclick="nextCBTStep()">Continue</button>
-                <button class="btn btn-secondary" onclick="skipCBT()">Skip</button>
+            <div class="btn-group" style="margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="nextCBTStep()">
+                    <i class="fas fa-arrow-right"></i> Continue
+                </button>
+                <button class="btn btn-secondary" onclick="skipCBT()">
+                    <i class="fas fa-forward"></i> Skip
+                </button>
             </div>
         </div>
     </div>
 
     <script>
         // ===== GLOBAL STATE =====
+        let currentUser = null;
         let currentSection = 'home';
         let timerInterval = null;
         let timerSeconds = 0;
@@ -1025,10 +1978,165 @@
         let currentColorText = '';
 
         // Chat state
-        let chatState = 'initial'; // initial, analyzing, recommending
+        let chatState = 'initial';
         let userMoodDescription = '';
 
-        // ===== EMOTION LEXICON (Simulated AI) =====
+        // ===== LOGIN FUNCTIONALITY =====
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+            const messageDiv = document.getElementById('loginMessage');
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<span class="loading-spinner"></span> Signing in...';
+            messageDiv.innerHTML = '';
+            
+            // Simulate authentication
+            setTimeout(() => {
+                if (email && password.length >= 4) {
+                    // Success
+                    currentUser = {
+                        email: email,
+                        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
+                        avatar: email[0].toUpperCase(),
+                        provider: 'email'
+                    };
+                    
+                    messageDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> Login successful! Redirecting...</div>';
+                    
+                    setTimeout(() => {
+                        showMainApp();
+                    }, 1500);
+                } else {
+                    // Error
+                    messageDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> Invalid email or password. Please try again.</div>';
+                    loginBtn.disabled = false;
+                    btnText.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                }
+            }, 2000);
+        });
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+
+        function loginWithGoogle() {
+            const loginBtn = document.querySelector('.btn-google');
+            const originalContent = loginBtn.innerHTML;
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading-spinner"></span> Connecting to Google...';
+            
+            // Simulate Google OAuth
+            setTimeout(() => {
+                // Simulate successful Google login
+                currentUser = {
+                    email: 'user@gmail.com',
+                    name: 'Google User',
+                    avatar: 'G',
+                    provider: 'google',
+                    picture: 'https://picsum.photos/seed/google-user/100/100.jpg'
+                };
+                
+                const messageDiv = document.getElementById('loginMessage');
+                messageDiv.innerHTML = '<div class="alert alert-success"><i class="fab fa-google"></i> Successfully connected with Google!</div>';
+                
+                setTimeout(() => {
+                    showMainApp();
+                }, 1500);
+            }, 2000);
+        }
+
+        function quickDemo() {
+            const loginBtn = document.querySelector('.btn-demo');
+            const originalContent = loginBtn.innerHTML;
+            
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading-spinner"></span> Loading demo...';
+            
+            setTimeout(() => {
+                currentUser = {
+                    email: 'demo@mindverse.com',
+                    name: 'Demo User',
+                    avatar: 'D',
+                    provider: 'demo'
+                };
+                
+                const messageDiv = document.getElementById('loginMessage');
+                messageDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-rocket"></i> Entering demo mode...</div>';
+                
+                setTimeout(() => {
+                    showMainApp();
+                }, 1000);
+            }, 1500);
+        }
+
+        function showMainApp() {
+            // Update user info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userAvatar').textContent = currentUser.avatar;
+            
+            // Hide login, show main app
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').classList.add('active');
+            
+            // Initialize app
+            updateHomeStats();
+            updateTimerDisplay();
+            
+            // Add entrance animation
+            document.querySelectorAll('.stat-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                document.getElementById('mainApp').classList.remove('active');
+                document.getElementById('loginPage').style.display = 'flex';
+                
+                // Reset form
+                document.getElementById('loginForm').reset();
+                document.getElementById('loginMessage').innerHTML = '';
+                document.getElementById('loginBtn').disabled = false;
+                document.getElementById('btnText').innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                
+                // Reset Google button
+                const googleBtn = document.querySelector('.btn-google');
+                googleBtn.disabled = false;
+                googleBtn.innerHTML = '<i class="fab fa-google"></i> Continue with Google';
+                
+                // Reset Demo button
+                const demoBtn = document.querySelector('.btn-demo');
+                demoBtn.disabled = false;
+                demoBtn.innerHTML = '<i class="fas fa-rocket"></i> Try Demo Mode';
+            }
+        }
+
+        // ===== EMOTION LEXICON =====
         const emotionLexicon = {
             positive: [
                 'happy', 'joy', 'excited', 'great', 'wonderful', 'amazing', 'love', 'blessed',
@@ -1146,7 +2254,7 @@
         // ===== UTILITY FUNCTIONS =====
         function showSection(sectionId) {
             // Update nav buttons
-            document.querySelectorAll('.nav-links button').forEach(btn => {
+            document.querySelectorAll('.nav-link').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
@@ -1186,7 +2294,7 @@
                 return;
             }
 
-            // Simulated AI: Simple sentiment analysis using lexicon
+            // Simulated AI sentiment analysis
             const words = text.toLowerCase().split(/\s+/);
             let positiveCount = 0;
             let negativeCount = 0;
@@ -1262,8 +2370,32 @@
             entries.push(entry);
             localStorage.setItem('mindverse_entries', JSON.stringify(entries));
             
-            alert('✨ Mood entry saved to your journal!');
+            // Show success notification
+            showNotification('✨ Mood entry saved to your journal!', 'success');
             document.getElementById('moodText').value = '';
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 3000;
+                min-width: 300px;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
         }
 
         function getEntries() {
@@ -1277,6 +2409,7 @@
             const entries = getEntries().filter(e => e.id !== id);
             localStorage.setItem('mindverse_entries', JSON.stringify(entries));
             renderJournal();
+            showNotification('Entry deleted successfully', 'success');
         }
 
         function getFocusData() {
@@ -1303,8 +2436,8 @@
             const container = document.getElementById('journalList');
             
             if (entries.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-secondary);">No entries yet. Start by analyzing your mood!</p>';
-                document.getElementById('moodChartBars').innerHTML = '<p style="color: var(--text-secondary);">No data to display</p>';
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No entries yet. Start by analyzing your mood!</p>';
+                document.getElementById('moodChartBars').innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No data to display</p>';
                 return;
             }
 
@@ -1318,7 +2451,9 @@
                                 <strong>${entry.emoji} ${entry.mood}</strong> - ${date.toLocaleDateString()} ${date.toLocaleTimeString()}
                             </div>
                             <div class="journal-actions">
-                                <button class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteEntry(${entry.id})">Delete</button>
+                                <button class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteEntry(${entry.id})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
                             </div>
                         </div>
                         <p style="margin-top: 0.5rem; color: var(--text-secondary);">${entry.text.substring(0, 150)}${entry.text.length > 150 ? '...' : ''}</p>
@@ -1346,12 +2481,12 @@
                     <div class="chart-bar">
                         <div class="chart-label">${mood}</div>
                         <div class="chart-bar-fill" style="width: ${percentage}%"></div>
-                        <span style="margin-left: 0.5rem; font-size: 0.9rem;">${count}</span>
+                        <span class="chart-value">${count}</span>
                     </div>
                 `;
             }).join('');
 
-            document.getElementById('moodChartBars').innerHTML = chartHtml || '<p>No data</p>';
+            document.getElementById('moodChartBars').innerHTML = chartHtml || '<p style="text-align: center; color: var(--text-muted);">No data</p>';
         }
 
         function getMoodColor(mood) {
@@ -1443,8 +2578,8 @@
 
             // Draw center sun
             const gradient = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, 50);
-            gradient.addColorStop(0, '#00f0ff');
-            gradient.addColorStop(1, '#8b5cf6');
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
             ctx.fillStyle = gradient;
             ctx.beginPath();
             ctx.arc(canvas.width / 2, canvas.height / 2, 30, 0, Math.PI * 2);
@@ -1458,7 +2593,7 @@
                 planet.y = canvas.height / 2 + Math.sin(planet.angle) * planet.radius;
 
                 // Draw orbit path
-                ctx.strokeStyle = 'rgba(139, 92, 246, 0.2)';
+                ctx.strokeStyle = 'rgba(102, 126, 234, 0.2)';
                 ctx.beginPath();
                 ctx.arc(canvas.width / 2, canvas.height / 2, planet.radius, 0, Math.PI * 2);
                 ctx.stroke();
@@ -1486,11 +2621,11 @@
         function showPlanetDetail(entry) {
             const date = new Date(entry.date);
             document.getElementById('planetDetailContent').innerHTML = `
-                <p><strong>Date:</strong> ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</p>
-                <p><strong>Mood:</strong> ${entry.emoji} ${entry.mood}</p>
-                <p><strong>Score:</strong> ${entry.score}</p>
-                <p style="margin-top: 1rem;"><strong>Entry:</strong></p>
-                <p style="color: var(--text-secondary);">${entry.text}</p>
+                <p><strong><i class="fas fa-calendar"></i> Date:</strong> ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</p>
+                <p><strong><i class="fas fa-smile"></i> Mood:</strong> ${entry.emoji} ${entry.mood}</p>
+                <p><strong><i class="fas fa-chart-line"></i> Score:</strong> ${entry.score}</p>
+                <p style="margin-top: 1rem;"><strong><i class="fas fa-pen"></i> Entry:</strong></p>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">${entry.text}</p>
             `;
             document.getElementById('planetDetail').style.display = 'block';
         }
@@ -1530,6 +2665,7 @@
             }, 1000);
 
             updateTimerDisplay();
+            showNotification('Focus session started! Stay focused 🎯', 'info');
         }
 
         function pauseTimer() {
@@ -1538,6 +2674,7 @@
                 clearInterval(timerInterval);
                 timerInterval = null;
             }
+            showNotification('Timer paused', 'info');
         }
  
         function resetTimer() {
@@ -1545,6 +2682,7 @@
             const minutes = parseInt(document.getElementById('sessionLength').value);
             timerSeconds = minutes * 60;
             updateTimerDisplay();
+            showNotification('Timer reset', 'info');
         }
 
         function updateTimerDisplay() {
@@ -1586,7 +2724,7 @@
             updateTimerDisplay();
 
             updateFocusStats();
-            alert('🎉 Focus session complete! Your universe has grown! 🌱');
+            showNotification('🎉 Focus session complete! Your universe has grown! 🌱', 'success');
         }
 
         function updateFocusStats() {
@@ -1619,8 +2757,8 @@
             if (cbtStep < prompts.length) {
                 const prompt = prompts[cbtStep];
                 document.getElementById('cbtContent').innerHTML = `
-                    <p style="margin-bottom: 1rem;">${prompt.question}</p>
-                    <textarea id="cbtInput" placeholder="${prompt.placeholder}" style="width: 100%; min-height: 100px;"></textarea>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">${prompt.question}</p>
+                    <textarea id="cbtInput" placeholder="${prompt.placeholder}" style="width: 100%; min-height: 120px;"></textarea>
                 `;
             }
         }
@@ -1637,7 +2775,7 @@
                 // Complete CBT
                 document.getElementById('cbtOverlay').classList.remove('active');
                 localStorage.setItem('cbt_completed_today', new Date().toDateString());
-                alert('Great work on the mindfulness exercise! Now let\'s focus. 🧘');
+                showNotification('Great work on the mindfulness exercise! Now let\'s focus. 🧘', 'success');
                 beginFocusTimer();
             } else {
                 displayCBTStep();
@@ -1687,7 +2825,6 @@
         }
 
         function getCareerSuggestions(types) {
-            // RAISEC career mapping
             const careerMap = {
                 'R': {
                     title: 'Realistic - The Doer',
@@ -1744,13 +2881,13 @@
 
         function displayCareerResults(careers) {
             const html = careers.map((career, index) => `
-                <div class="career-card">
-                    <h3>${index + 1}. ${career.title}</h3>
-                    <p style="margin-top: 0.5rem;"><strong>Potential Careers:</strong></p>
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3><i class="fas fa-trophy"></i> ${index + 1}. ${career.title}</h3>
+                    <p style="margin-top: 1rem;"><strong><i class="fas fa-briefcase"></i> Potential Careers:</strong></p>
                     <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
                         ${career.careers.map(c => `<li>${c}</li>`).join('')}
                     </ul>
-                    <p style="margin-top: 1rem;"><strong>Next Steps:</strong></p>
+                    <p style="margin-top: 1.5rem;"><strong><i class="fas fa-road"></i> Next Steps:</strong></p>
                     <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
                         ${career.steps.map(s => `<li>${s}</li>`).join('')}
                     </ol>
@@ -1758,11 +2895,13 @@
             `).join('');
 
             document.getElementById('careerResults').innerHTML = `
-                <h2>Your Top Career Paths 🎯</h2>
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-chart-pie"></i> Your Top Career Paths 🎯</h3>
+                </div>
                 ${html}
             `;
             document.getElementById('careerResults').style.display = 'block';
-            document.getElementById('careerQuiz').style.display = 'none';
+            document.querySelector('.quiz-container').style.display = 'none';
         }
 
         // ===== GAMES SECTION - AI CHAT =====
@@ -1871,7 +3010,7 @@
         }
 
         function analyzeMoodFromChat(message) {
-            // Simulated AI: Simple sentiment analysis using lexicon
+            // Simulated AI sentiment analysis
             const words = message.toLowerCase().split(/\s+/);
             let positiveCount = 0;
             let negativeCount = 0;
@@ -1944,7 +3083,9 @@
                     <div class="game-icon">${game.icon}</div>
                     <h3 class="game-title">${game.title}</h3>
                     <p class="game-description">${game.description}</p>
-                    <button class="btn btn-primary" style="margin-top: 1rem;">Play Now</button>
+                    <button class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i class="fas fa-play"></i> Play Now
+                    </button>
                 </div>
             `).join('');
             
@@ -1967,7 +3108,7 @@
             // Add AI message
             const game = Object.values(gameRecommendations).flat().find(g => g.id === gameId);
             if (game) {
-                addChatMessage('ai', `Great choice! I've loaded ${game.title} for you. Enjoy playing!`);
+                addChatMessage('ai', `Great choice! I've loaded ${game.title} for you. Enjoy playing! 🎮`);
             }
             
             // Initialize the game
@@ -2020,6 +3161,8 @@
                     }
                 }
             }, 1000);
+            
+            showNotification('Breathing exercise started. Follow the circle! 🧘', 'info');
         }
 
         function stopBreathing() {
@@ -2082,7 +3225,7 @@
             // Check for win
             if (memoryMatches === memoryCards.length / 2) {
                 setTimeout(() => {
-                    alert(`🎉 Congratulations! You completed the game in ${memoryMoves} moves!`);
+                    showNotification(`🎉 Congratulations! You completed the game in ${memoryMoves} moves!`, 'success');
                 }, 500);
             }
         }
@@ -2224,10 +3367,12 @@
         function updateHomeStats() {
             const entries = getEntries();
             const focusData = getFocusData();
+            const growth = getPlanetGrowth();
             
             document.getElementById('homeEntryCount').textContent = entries.length;
             document.getElementById('homeFocusCount').textContent = focusData.sessions;
             document.getElementById('homeStreak').textContent = focusData.streak;
+            document.getElementById('homeGrowth').textContent = growth;
         }
 
         // ===== DEMO & RESET =====
@@ -2264,7 +3409,7 @@
             saveFocusData({ sessions: 12, streak: 3, totalMinutes: 250, lastDate: new Date().toDateString() });
             localStorage.setItem('mindverse_growth', '15');
 
-            alert('✨ Demo data loaded! Check out your Universe and Games!');
+            showNotification('✨ Demo data loaded! Check out your Universe and Games!', 'success');
             updateHomeStats();
             if (currentSection === 'journal') renderJournal();
             if (currentSection === 'universe') renderUniverse();
@@ -2274,15 +3419,53 @@
             if (!confirm('Reset all data? This cannot be undone!')) return;
 
             localStorage.clear();
-            alert('All data has been reset.');
+            showNotification('All data has been reset.', 'info');
             location.reload();
         }
 
         // ===== INITIALIZE =====
         window.onload = () => {
-            updateHomeStats();
-            updateTimerDisplay();
+            // Check if user is already logged in (from session)
+            const savedUser = sessionStorage.getItem('mindverse_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showMainApp();
+            }
         };
+
+        // Save user session
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                sessionStorage.setItem('mindverse_user', JSON.stringify(currentUser));
+            }
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
