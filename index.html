@@ -1,1441 +1,19 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindVerse - AI-Powered Self-Discovery Universe</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* ===== CSS VARIABLES ===== */
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --dark-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-primary: #ffffff;
-            --text-secondary: #b8c0e0;
-            --text-muted: #8892b0;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-gradient);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ===== ANIMATED BACKGROUND ===== */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: var(--dark-gradient);
-        }
-
-        .floating-orbs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.6;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .orb1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            top: -150px;
-            left: -150px;
-            animation-delay: 0s;
-        }
-
-        .orb2 {
-            width: 250px;
-            height: 250px;
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            top: 50%;
-            right: -125px;
-            animation-delay: 5s;
-        }
-
-        .orb3 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            bottom: -100px;
-            left: 30%;
-            animation-delay: 10s;
-        }
-
-        .orb4 {
-            width: 180px;
-            height: 180px;
-            background: linear-gradient(135deg, #fa709a, #fee140);
-            top: 20%;
-            left: 60%;
-            animation-delay: 15s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(100px, -100px) rotate(90deg); }
-            50% { transform: translate(-100px, 100px) rotate(180deg); }
-            75% { transform: translate(50px, 50px) rotate(270deg); }
-        }
-
-        /* ===== LOGIN PAGE ===== */
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .login-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            max-width: 1200px;
-            width: 100%;
-            align-items: center;
-        }
-
-        .login-content {
-            text-align: left;
-            animation: slideInLeft 1s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .brand-section {
-            margin-bottom: 3rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-gradient);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .brand-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .tagline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .features {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-            border-color: rgba(102, 126, 234, 0.5);
-        }
-
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--accent-gradient);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .feature-text h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .feature-text p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .login-form-section {
-            animation: slideInRight 1s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .login-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-2xl);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-gradient);
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .login-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .form-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .form-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .password-container {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .password-toggle:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .divider span {
-            background: var(--glass-bg);
-            padding: 0 1rem;
-            color: var(--text-muted);
-            position: relative;
-            font-size: 0.9rem;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-google {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-google:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-demo {
-            background: var(--accent-gradient);
-            color: white;
-        }
-
-        .btn-demo:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .loading-spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: var(--success);
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--error);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* ===== MAIN APPLICATION ===== */
-        .main-app {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .main-app.active {
-            display: block;
-        }
-
-        /* ===== NAVIGATION ===== */
-        nav {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-brand i {
-            font-size: 1.8rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 0.5rem;
-            list-style: none;
-        }
-
-        .nav-link {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.95rem;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-link.active {
-            color: var(--text-primary);
-            background: var(--primary-gradient);
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .user-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .user-email {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .logout-btn {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        /* ===== MAIN CONTAINER ===== */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .section {
-            display: none;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== CARDS ===== */
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-xl);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-2xl);
-        }
-
-        .card-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        /* ===== STATS GRID ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* ===== MOOD ANALYZER ===== */
-        .emoji-selector {
-            display: flex;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .emoji-btn {
-            font-size: 2.5rem;
-            padding: 1.25rem;
-            background: var(--glass-bg);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .emoji-btn:hover {
-            border-color: #667eea;
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .emoji-btn:active {
-            transform: scale(0.95);
-        }
-
-        textarea {
-            width: 100%;
-            padding: 1.25rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            min-height: 150px;
-            resize: vertical;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        textarea::placeholder {
-            color: var(--text-muted);
-        }
-
-        .mood-result {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            animation: slideInUp 0.5s ease-out;
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== UNIVERSE CANVAS ===== */
-        #universeCanvas {
-            width: 100%;
-            height: 600px;
-            border-radius: 20px;
-            background: radial-gradient(circle at center, #1a0933 0%, #0a0e27 100%);
-            cursor: pointer;
-            box-shadow: var(--shadow-2xl);
-        }
-
-        .universe-info {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* ===== FOCUS MODE ===== */
-        .timer-display {
-            font-size: 5rem;
-            text-align: center;
-            margin: 3rem 0;
-            font-weight: 700;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
-        }
-
-        .timer-controls {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .session-selector {
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .session-selector select {
-            padding: 0.75rem 1.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            cursor: pointer;
-            outline: none;
-        }
-
-        /* ===== CAREER QUIZ ===== */
-        .quiz-container {
-            margin-top: 2rem;
-        }
-
-        .quiz-question {
-            margin-bottom: 2.5rem;
-            padding: 2rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-        }
-
-        .quiz-question h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .quiz-options {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .quiz-option {
-            padding: 1.25rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .quiz-option:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateX(5px);
-        }
-
-        .quiz-option.selected {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.2);
-        }
-
-        /* ===== GAMES SECTION ===== */
-        .ai-chat {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .chat-container {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            height: 500px;
-            overflow-y: auto;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .chat-message {
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: flex-start;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .chat-message.ai {
-            justify-content: flex-start;
-        }
-
-        .chat-message.user {
-            justify-content: flex-end;
-        }
-
-        .message-bubble {
-            max-width: 70%;
-            padding: 1rem 1.5rem;
-            border-radius: 18px;
-            word-wrap: break-word;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .ai .message-bubble {
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-bottom-left-radius: 6px;
-        }
-
-        .user .message-bubble {
-            background: rgba(79, 172, 254, 0.1);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-bottom-right-radius: 6px;
-            margin-left: auto;
-        }
-
-        .chat-input-container {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .typing-indicator {
-            display: none;
-            padding: 1rem 1.5rem;
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 18px;
-            width: fit-content;
-            margin-bottom: 1.5rem;
-        }
-
-        .typing-indicator.active {
-            display: block;
-        }
-
-        .typing-indicator span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #667eea;
-            margin: 0 2px;
-            animation: typing 1.4s infinite;
-        }
-
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typing {
-            0%, 60%, 100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .game-recommendations {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .game-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .game-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-2xl);
-            border-color: rgba(102, 126, 234, 0.5);
-        }
-
-        .game-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .game-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .game-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        /* ===== JOURNAL ===== */
-        .journal-entry {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-            border-left: 4px solid;
-            transition: all 0.3s ease;
-        }
-
-        .journal-entry:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .journal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .journal-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .mood-chart {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-        }
-
-        .chart-bar {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .chart-label {
-            width: 120px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .chart-bar-fill {
-            height: 35px;
-            background: var(--accent-gradient);
-            border-radius: 8px;
-            transition: width 0.8s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chart-bar-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .chart-value {
-            margin-left: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* ===== GAME SPECIFIC STYLES ===== */
-        .game-container {
-            margin-top: 2rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            display: none;
-        }
-
-        .game-container.active {
-            display: block;
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .breathing-circle {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            background: var(--accent-gradient);
-            margin: 2rem auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: white;
-            transition: all 4s ease-in-out;
-            box-shadow: 0 10px 40px rgba(79, 172, 254, 0.4);
-        }
-
-        .breathing-circle.inhale {
-            transform: scale(1.5);
-            box-shadow: 0 15px 50px rgba(79, 172, 254, 0.6);
-        }
-
-        .breathing-circle.hold {
-            transform: scale(1.5);
-        }
-
-        .breathing-circle.exhale {
-            transform: scale(1);
-        }
-
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            max-width: 500px;
-            margin: 2rem auto;
-        }
-
-        .memory-card {
-            aspect-ratio: 1;
-            background: var(--glass-bg);
-            border: 2px solid rgba(102, 126, 234, 0.3);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .memory-card:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .memory-card.flipped {
-            background: rgba(79, 172, 254, 0.2);
-            border-color: #4facfe;
-        }
-
-        .memory-card.matched {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: var(--success);
-            cursor: default;
-        }
-
-        .color-match-container {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .color-word {
-            font-size: 4.5rem;
-            font-weight: 700;
-            margin: 2rem 0;
-            padding: 2rem;
-            border-radius: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .color-options {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .color-btn {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .color-btn:hover {
-            transform: scale(1.1);
-            border-color: white;
-        }
-
-        .game-score {
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 1.5rem 0;
-            font-weight: 600;
-        }
-
-        /* ===== CBT OVERLAY ===== */
-        .cbt-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(5px);
-        }
-
-        .cbt-overlay.active {
-            display: flex;
-        }
-
-        .cbt-modal {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem;
-            max-width: 600px;
-            width: 90%;
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-2xl);
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1024px) {
-            .login-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .login-content {
-                text-align: center;
-            }
-
-            .features {
-                align-items: center;
-            }
-
-            .feature-item {
-                max-width: 400px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .user-section {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .user-info {
-                align-items: center;
-            }
-
-            .timer-display {
-                font-size: 3rem;
-            }
-
-            .memory-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .message-bubble {
-                max-width: 85%;
-            }
-
-            .login-card {
-                padding: 2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .emoji-btn {
-                font-size: 2rem;
-                padding: 1rem;
-            }
-
-            .memory-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .color-btn {
-                width: 80px;
-                height: 80px;
-            }
-
-            .game-recommendations {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Animated Background -->
-    <div class="animated-bg"></div>
-    <div class="floating-orbs">
-        <div class="orb orb1"></div>
-        <div class="orb orb2"></div>
-        <div class="orb orb3"></div>
-        <div class="orb orb4"></div>
+    <div class="cosmic-bg">
+        <div class="stars-layer"></div>
+        <div class="nebula-layer"></div>
+        <div class="aurora-layer"></div>
     </div>
 
     <!-- ===== LOGIN PAGE ===== -->
@@ -1444,40 +22,57 @@
             <!-- Left Side - Brand Content -->
             <div class="login-content">
                 <div class="brand-section">
-                    <div class="logo">
-                        <div class="logo-icon">🧠</div>
-                        <div class="brand-name">MindVerse</div>
+                    <div class="logo-container">
+                        <div class="logo-glow">
+                            <div class="logo-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                        <div class="brand-text">
+                            <h1 class="brand-name">MindVerse</h1>
+                            <p class="tagline">Your AI-powered emotional cosmos</p>
+                        </div>
                     </div>
-                    <h1 class="tagline">Your AI-powered self-discovery universe</h1>
                 </div>
 
-                <div class="features">
-                    <div class="feature-item">
-                        <div class="feature-icon">🎯</div>
-                        <div class="feature-text">
-                            <h3>AI Mood Analysis</h3>
-                            <p>Advanced sentiment analysis to understand your emotional patterns</p>
+                <div class="features-showcase">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-heart-pulse"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Emotional Intelligence</h3>
+                            <p>AI-powered mood analysis with personalized insights</p>
                         </div>
                     </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🌍</div>
-                        <div class="feature-text">
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Mood-Based Music</h3>
+                            <p>AI generates personalized songs based on your emotions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="feature-content">
                             <h3>Emotional Universe</h3>
-                            <p>Visualize your feelings as an interactive cosmic journey</p>
+                            <p>Visualize feelings as an interactive cosmic journey</p>
                         </div>
                     </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🎮</div>
-                        <div class="feature-text">
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="feature-content">
                             <h3>Therapeutic Games</h3>
-                            <p>Personalized games designed for your mental wellness</p>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🚀</div>
-                        <div class="feature-text">
-                            <h3>Career Guidance</h3>
-                            <p>Discover your perfect career path with RAISEC analysis</p>
+                            <p>Personalized games with AI-generated soundtracks</p>
                         </div>
                     </div>
                 </div>
@@ -1487,30 +82,34 @@
             <div class="login-form-section">
                 <div class="login-card">
                     <div class="login-header">
-                        <h2 class="login-title">Welcome Back</h2>
-                        <p class="login-subtitle">Enter your mind space and continue your journey</p>
+                        <h2 class="login-title">Enter Your Mind</h2>
+                        <p class="login-subtitle">Begin your journey of self-discovery</p>
                     </div>
 
                     <form id="loginForm">
                         <div class="form-group">
-                            <label class="form-label" for="email">Email Address</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                class="form-input" 
-                                placeholder="you@example.com"
-                                required
-                            >
+                            <label class="form-label" for="email">Cosmic Email</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    class="form-input" 
+                                    placeholder="your@cosmos.email"
+                                    required
+                                >
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="password">Password</label>
-                            <div class="password-container">
+                            <label class="form-label" for="password">Mind Key</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
                                 <input 
                                     type="password" 
                                     id="password" 
                                     class="form-input" 
-                                    placeholder="Enter your password"
+                                    placeholder="Enter your mind key"
                                     required
                                 >
                                 <button type="button" class="password-toggle" onclick="togglePassword()">
@@ -1521,207 +120,327 @@
 
                         <div id="loginMessage"></div>
 
-                        <button type="submit" class="btn btn-primary" id="loginBtn">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span id="btnText">Sign In</span>
+                        <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+                            <span class="btn-content">
+                                <i class="fas fa-rocket"></i>
+                                <span id="btnText">Launch Journey</span>
+                            </span>
+                            <div class="btn-glow"></div>
                         </button>
                     </form>
 
                     <div class="divider">
-                        <span>OR CONTINUE WITH</span>
+                        <span>OR ACCESS VIA</span>
                     </div>
 
-                    <button class="btn btn-google" onclick="loginWithGoogle()">
+                    <button class="btn btn-google btn-full" onclick="loginWithGoogle()">
                         <i class="fab fa-google"></i>
-                        <span>Continue with Google</span>
+                        <span>Connect with Google</span>
                     </button>
 
-                    <button class="btn btn-demo" onclick="quickDemo()" style="margin-top: 1rem;">
-                        <i class="fas fa-rocket"></i>
-                        <span>Try Demo Mode</span>
+                    <button class="btn btn-demo btn-full" onclick="quickDemo()">
+                        <i class="fas fa-sparkles"></i>
+                        <span>Experience Demo Mode</span>
                     </button>
 
-                    <p style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
-                        Don't have an account? <a href="#" style="color: #667eea; text-decoration: none; font-weight: 500;">Sign up</a>
+                    <p class="signup-link">
+                        New to the universe? <a href="#" class="link-primary">Create your cosmos</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- ===== MAIN APPLICATION ===== -->
     <div id="mainApp" class="main-app">
-    
-        <nav>
+        <!-- Navigation -->
+        <nav class="cosmic-nav">
             <div class="nav-container">
                 <div class="nav-brand">
-                    <i class="fas fa-brain"></i>
-                    <span>MindVerse</span>
+                    <div class="brand-logo">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="brand-text">MindVerse</span>
                 </div>
-                <ul class="nav-links">
-                    <li><button class="nav-link active" onclick="showSection('home')">Home</button></li>
-                    <li><button class="nav-link" onclick="showSection('mood')">Mood</button></li>
-                    <li><button class="nav-link" onclick="showSection('universe')">Universe</button></li>
-                    <li><button class="nav-link" onclick="showSection('focus')">Focus</button></li>
-                    <li><button class="nav-link" onclick="showSection('career')">Career</button></li>
-                    <li><button class="nav-link" onclick="showSection('games')">Games</button></li>
-                    <li><button class="nav-link" onclick="showSection('journal')">Journal</button></li>
-                </ul>
+                
+                <div class="nav-menu">
+                    <button class="nav-item active" data-section="home" onclick="showSection('home')">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </button>
+                    <button class="nav-item" data-section="mood" onclick="showSection('mood')">
+                        <i class="fas fa-heart-pulse"></i>
+                        <span>Mood</span>
+                    </button>
+                    <button class="nav-item" data-section="universe" onclick="showSection('universe')">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Universe</span>
+                    </button>
+                    <button class="nav-item" data-section="focus" onclick="showSection('focus')">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Focus</span>
+                    </button>
+                    <button class="nav-item" data-section="career" onclick="showSection('career')">
+                        <i class="fas fa-rocket"></i>
+                        <span>Career</span>
+                    </button>
+                    <button class="nav-item" data-section="games" onclick="showSection('games')">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Games</span>
+                    </button>
+                    <button class="nav-item" data-section="journal" onclick="showSection('journal')">
+                        <i class="fas fa-book"></i>
+                        <span>Journal</span>
+                    </button>
+                </div>
+
                 <div class="user-section">
                     <div class="user-avatar" id="userAvatar">U</div>
                     <div class="user-info">
                         <div class="user-name" id="userName">User</div>
-                        <div class="user-email" id="userEmail">user@example.com</div>
+                        <div class="user-email" id="userEmail">user@cosmos.email</div>
                     </div>
-                    <button class="logout-button" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
             </div>
         </nav>
 
-        <div class="container">
-        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- HOME SECTION -->
             <section id="home" class="section active">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Welcome to Your MindVerse 🌌</h2>
-                        <p class="card-subtitle">
-                            Your personal AI companion for emotional wellness, self-discovery, and mental growth
+                <div class="hero-card">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="gradient-text">Welcome to Your MindVerse</span>
+                            <i class="fas fa-sparkles title-sparkle"></i>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Your personal AI companion for emotional wellness, self-discovery, and cosmic growth
                         </p>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button class="btn btn-primary" onclick="showSection('mood')">
-                            <i class="fas fa-smile"></i> Start Mood Check
-                        </button>
-                        <button class="btn btn-secondary" onclick="populateDemoData()">
-                            <i class="fas fa-database"></i> Load Demo Data
-                        </button>
-                        <button class="btn btn-danger" onclick="resetAllData()">
-                            <i class="fas fa-trash"></i> Reset Data
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Your Journey Stats</h3>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" id="homeEntryCount">0</div>
-                            <div class="stat-label">Journal Entries</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="homeFocusCount">0</div>
-                            <div class="stat-label">Focus Sessions</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="homeStreak">0</div>
-                            <div class="stat-label">Day Streak</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="homeGrowth">0</div>
-                            <div class="stat-label">Planet Growth</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-            <section id="mood" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Mood Analyzer 💭</h2>
-                        <p class="card-subtitle">How are you feeling today? Let AI help you understand your emotions</p>
-                    </div>
-                    
-                    <div class="emoji-selector">
-                        <button class="emoji-btn" onclick="quickMood('😊', 'Happy')">😊</button>
-                        <button class="emoji-btn" onclick="quickMood('😌', 'Calm')">😌</button>
-                        <button class="emoji-btn" onclick="quickMood('😐', 'Neutral')">😐</button>
-                        <button class="emoji-btn" onclick="quickMood('😰', 'Anxious')">😰</button>
-                        <button class="emoji-btn" onclick="quickMood('😫', 'Stressed')">😫</button>
-                        <button class="emoji-btn" onclick="quickMood('😴', 'Bored')">😴</button>
-                    </div>
-
-                    <textarea id="moodText" placeholder="Or write about your feelings in detail..."></textarea>
-                    
-                    <div style="margin-top: 1.5rem;">
-                        <button class="btn btn-primary" onclick="analyzeMood()">
-                            <i class="fas fa-brain"></i> Analyze Mood
-                        </button>
-                    </div>
-
-                    <div id="moodResult" style="display: none;" class="mood-result">
-                        <h3><i class="fas fa-chart-line"></i> Analysis Result</h3>
-                        <p><strong>Mood:</strong> <span id="moodLabel"></span> <span id="moodEmoji"></span></p>
-                        <p><strong>Score:</strong> <span id="moodScore"></span></p>
-                        <p id="moodSummary"></p>
-                        <div style="margin-top: 1.5rem;">
-                            <button class="btn btn-primary" onclick="showSection('games')">
-                                <i class="fas fa-gamepad"></i> Try Mood-Based Games
+                        
+                        <div class="hero-actions">
+                            <button class="btn btn-primary btn-large" onclick="showSection('mood')">
+                                <i class="fas fa-heart-pulse"></i>
+                                <span>Start Mood Analysis</span>
+                                <div class="btn-glow"></div>
+                            </button>
+                            <button class="btn btn-secondary btn-large" onclick="populateDemoData()">
+                                <i class="fas fa-database"></i>
+                                <span>Load Demo Data</span>
+                            </button>
+                            <button class="btn btn-danger btn-large" onclick="resetAllData()">
+                                <i class="fas fa-trash"></i>
+                                <span>Reset Universe</span>
                             </button>
                         </div>
                     </div>
                 </div>
-            </section>
 
-           
-            <section id="universe" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Your Emotional Universe 🌍</h2>
-                        <p class="card-subtitle">Each planet represents a day's emotional state. Click to explore!</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="homeEntryCount">0</div>
+                            <div class="stat-label">Journal Entries</div>
+                        </div>
+                        <div class="stat-glow"></div>
                     </div>
                     
-                    <canvas id="universeCanvas"></canvas>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="homeFocusCount">0</div>
+                            <div class="stat-label">Focus Sessions</div>
+                        </div>
+                        <div class="stat-glow"></div>
+                    </div>
                     
-                    <div class="universe-info">
-                        <p><strong>🌱 Planet Growth Level:</strong> <span id="planetGrowth">0</span></p>
-                        <p style="margin-top: 0.5rem; color: var(--text-muted);">
-                            Complete focus sessions to grow your planets and expand your universe!
-                        </p>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="homeStreak">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-glow"></div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="homeGrowth">0</div>
+                            <div class="stat-label">Cosmic Growth</div>
+                        </div>
+                        <div class="stat-glow"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MOOD SECTION -->
+            <section id="mood" class="section">
+                <div class="mood-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-heart-pulse"></i>
+                            Emotional Analyzer
+                        </h2>
+                        <p class="card-subtitle">How are you feeling in the cosmos today?</p>
+                    </div>
+                    
+                    <div class="mood-selector">
+                        <div class="mood-emoji-grid">
+                            <button class="mood-emoji-btn" onclick="quickMood('😊', 'Happy')" data-mood="happy">
+                                <span class="mood-emoji">😊</span>
+                                <span class="mood-label">Happy</span>
+                            </button>
+                            <button class="mood-emoji-btn" onclick="quickMood('😌', 'Calm')" data-mood="calm">
+                                <span class="mood-emoji">😌</span>
+                                <span class="mood-label">Calm</span>
+                            </button>
+                            <button class="mood-emoji-btn" onclick="quickMood('😐', 'Neutral')" data-mood="neutral">
+                                <span class="mood-emoji">😐</span>
+                                <span class="mood-label">Neutral</span>
+                            </button>
+                            <button class="mood-emoji-btn" onclick="quickMood('😰', 'Anxious')" data-mood="anxious">
+                                <span class="mood-emoji">😰</span>
+                                <span class="mood-label">Anxious</span>
+                            </button>
+                            <button class="mood-emoji-btn" onclick="quickMood('😫', 'Stressed')" data-mood="stressed">
+                                <span class="mood-emoji">😫</span>
+                                <span class="mood-label">Stressed</span>
+                            </button>
+                            <button class="mood-emoji-btn" onclick="quickMood('😴', 'Bored')" data-mood="bored">
+                                <span class="mood-emoji">😴</span>
+                                <span class="mood-label">Bored</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mood-text-section">
+                        <textarea 
+                            id="moodText" 
+                            class="mood-textarea" 
+                            placeholder="Or write about your cosmic feelings in detail..."
+                        ></textarea>
+                        
+                        <button class="btn btn-primary btn-large" onclick="analyzeMood()">
+                            <i class="fas fa-brain"></i>
+                            <span>Analyze Emotions</span>
+                            <div class="btn-glow"></div>
+                        </button>
+                    </div>
+
+                    <div id="moodResult" class="mood-result" style="display: none;">
+                        <div class="result-header">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Emotional Analysis</h3>
+                        </div>
+                        <div class="result-content">
+                            <div class="mood-score-display">
+                                <span class="mood-emoji-large" id="moodEmoji"></span>
+                                <span class="mood-label-large" id="moodLabel"></span>
+                                <div class="score-bar">
+                                    <div class="score-fill" id="scoreFill"></div>
+                                    <span class="score-text" id="moodScore"></span>
+                                </div>
+                            </div>
+                            <p class="mood-summary" id="moodSummary"></p>
+                            
+                            <div class="result-actions">
+                                <button class="btn btn-primary" onclick="showSection('games')">
+                                    <i class="fas fa-gamepad"></i>
+                                    <span>Try Mood-Based Games</span>
+                                </button>
+                                <button class="btn btn-secondary" onclick="generateMoodSongs()">
+                                    <i class="fas fa-music"></i>
+                                    <span>Generate Mood Songs</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- UNIVERSE SECTION -->
+            <section id="universe" class="section">
+                <div class="universe-card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-globe-americas"></i>
+                            Your Emotional Universe
+                        </h2>
+                        <p class="card-subtitle">Each planet represents a day's emotional state</p>
+                    </div>
+                    
+                    <div class="universe-container">
+                        <canvas id="universeCanvas" class="universe-canvas"></canvas>
+                        <div class="universe-controls">
+                            <div class="growth-indicator">
+                                <i class="fas fa-seedling"></i>
+                                <span>Planet Growth: </span>
+                                <span class="growth-level" id="planetGrowth">0</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="planetDetail" class="card" style="display: none;">
+                <div id="planetDetail" class="planet-detail-card" style="display: none;">
                     <div class="card-header">
-                        <h3 class="card-title">Planet Details</h3>
+                        <h3 class="card-title">
+                            <i class="fas fa-planet"></i>
+                            Planet Details
+                        </h3>
                     </div>
                     <div id="planetDetailContent"></div>
                     <button class="btn btn-secondary" onclick="closePlanetDetail()">
-                        <i class="fas fa-times"></i> Close
+                        <i class="fas fa-times"></i>
+                        <span>Close</span>
                     </button>
                 </div>
             </section>
 
-
+            <!-- FOCUS SECTION -->
             <section id="focus" class="section">
-                <div class="card">
+                <div class="focus-card">
                     <div class="card-header">
-                        <h2 class="card-title">Focus Mode 🎯</h2>
-                        <p class="card-subtitle">Boost productivity with Pomodoro technique and grow your universe</p>
+                        <h2 class="card-title">
+                            <i class="fas fa-bullseye"></i>
+                            Cosmic Focus Mode
+                        </h2>
+                        <p class="card-subtitle">Enhance productivity with Pomodoro technique</p>
                     </div>
                     
                     <div class="timer-display" id="timerDisplay">25:00</div>
                     
                     <div class="timer-controls">
-                        <button class="btn btn-primary" onclick="startFocusSession()">
-                            <i class="fas fa-play"></i> Start Focus
+                        <button class="btn btn-primary btn-large" onclick="startFocusSession()">
+                            <i class="fas fa-play"></i>
+                            <span>Start Focus</span>
+                            <div class="btn-glow"></div>
                         </button>
-                        <button class="btn btn-secondary" onclick="pauseTimer()">
-                            <i class="fas fa-pause"></i> Pause
+                        <button class="btn btn-secondary btn-large" onclick="pauseTimer()">
+                            <i class="fas fa-pause"></i>
+                            <span>Pause</span>
                         </button>
-                        <button class="btn btn-danger" onclick="resetTimer()">
-                            <i class="fas fa-redo"></i> Reset
+                        <button class="btn btn-danger btn-large" onclick="resetTimer()">
+                            <i class="fas fa-redo"></i>
+                            <span>Reset</span>
                         </button>
                     </div>
 
                     <div class="session-selector">
-                        <label>Session Length: </label>
-                        <select id="sessionLength">
+                        <label>Session Length:</label>
+                        <select id="sessionLength" class="session-select">
                             <option value="10">Quick (10 min)</option>
                             <option value="15">Short (15 min)</option>
                             <option value="25" selected>Standard (25 min)</option>
@@ -1729,18 +448,35 @@
                         </select>
                     </div>
 
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" id="totalSessions">0</div>
-                            <div class="stat-label">Total Sessions</div>
+                    <div class="focus-stats">
+                        <div class="focus-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalSessions">0</div>
+                                <div class="stat-label">Total Sessions</div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="focusStreak">0</div>
-                            <div class="stat-label">Current Streak</div>
+                        
+                        <div class="focus-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="focusStreak">0</div>
+                                <div class="stat-label">Current Streak</div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="totalMinutes">0</div>
-                            <div class="stat-label">Total Minutes</div>
+                        
+                        <div class="focus-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalMinutes">0</div>
+                                <div class="stat-label">Total Minutes</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1748,51 +484,110 @@
 
             <!-- CAREER SECTION -->
             <section id="career" class="section">
-                <div class="card">
+                <div class="career-card">
                     <div class="card-header">
-                        <h2 class="card-title">Career Pathfinder 🚀</h2>
-                        <p class="card-subtitle">Discover your ideal career path with RAISEC personality analysis</p>
+                        <h2 class="card-title">
+                            <i class="fas fa-rocket"></i>
+                            Career Pathfinder
+                        </h2>
+                        <p class="card-subtitle">Discover your ideal career path with RAISEC analysis</p>
                     </div>
                     
                     <div class="quiz-container">
                         <div class="quiz-question">
-                            <h3>1. What energizes you most?</h3>
+                            <h3>1. What energizes you most in the cosmos?</h3>
                             <div class="quiz-options">
-                                <div class="quiz-option" onclick="selectOption(0, 'R')">🔧 Working with tools and machines</div>
-                                <div class="quiz-option" onclick="selectOption(0, 'I')">🔬 Solving complex problems and research</div>
-                                <div class="quiz-option" onclick="selectOption(0, 'A')">🎨 Creating and expressing ideas</div>
-                                <div class="quiz-option" onclick="selectOption(0, 'S')">🤝 Helping and teaching others</div>
-                                <div class="quiz-option" onclick="selectOption(0, 'E')">📊 Leading teams and making decisions</div>
-                                <div class="quiz-option" onclick="selectOption(0, 'C')">📋 Organizing and managing data</div>
+                                <div class="quiz-option" onclick="selectOption(0, 'R')">
+                                    <i class="fas fa-tools"></i>
+                                    <span>Working with tools and building things</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(0, 'I')">
+                                    <i class="fas fa-microscope"></i>
+                                    <span>Solving complex problems and research</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(0, 'A')">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Creating and expressing ideas</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(0, 'S')">
+                                    <i class="fas fa-hands-helping"></i>
+                                    <span>Helping and teaching others</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(0, 'E')">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Leading teams and making decisions</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(0, 'C')">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    <span>Organizing and managing data</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="quiz-question">
-                            <h3>2. What's your preferred work environment?</h3>
+                            <h3>2. What's your preferred cosmic workspace?</h3>
                             <div class="quiz-options">
-                                <div class="quiz-option" onclick="selectOption(1, 'R')">🏗️ Hands-on, physical workspaces</div>
-                                <div class="quiz-option" onclick="selectOption(1, 'I')">🧪 Laboratories and research facilities</div>
-                                <div class="quiz-option" onclick="selectOption(1, 'A')">🎭 Creative studios and flexible spaces</div>
-                                <div class="quiz-option" onclick="selectOption(1, 'S')">🏥 Community-focused environments</div>
-                                <div class="quiz-option" onclick="selectOption(1, 'E')">🏢 Dynamic business settings</div>
-                                <div class="quiz-option" onclick="selectOption(1, 'C')">💻 Structured office environments</div>
+                                <div class="quiz-option" onclick="selectOption(1, 'R')">
+                                    <i class="fas fa-hard-hat"></i>
+                                    <span>Hands-on, physical environments</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(1, 'I')">
+                                    <i class="fas fa-flask"></i>
+                                    <span>Laboratories and research facilities</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(1, 'A')">
+                                    <i class="fas fa-theater-masks"></i>
+                                    <span>Creative studios and flexible spaces</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(1, 'S')">
+                                    <i class="fas fa-hospital"></i>
+                                    <span>Community-focused environments</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(1, 'E')">
+                                    <i class="fas fa-building"></i>
+                                    <span>Dynamic business settings</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(1, 'C')">
+                                    <i class="fas fa-laptop"></i>
+                                    <span>Structured office environments</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="quiz-question">
-                            <h3>3. What skills do you excel at?</h3>
+                            <h3>3. What cosmic skills do you excel at?</h3>
                             <div class="quiz-options">
-                                <div class="quiz-option" onclick="selectOption(2, 'R')">⚙️ Technical and mechanical skills</div>
-                                <div class="quiz-option" onclick="selectOption(2, 'I')">🧠 Analytical and critical thinking</div>
-                                <div class="quiz-option" onclick="selectOption(2, 'A')">✨ Innovation and imagination</div>
-                                <div class="quiz-option" onclick="selectOption(2, 'S')">💬 Empathy and communication</div>
-                                <div class="quiz-option" onclick="selectOption(2, 'E')">📈 Persuasion and negotiation</div>
-                                <div class="quiz-option" onclick="selectOption(2, 'C')">📊 Attention to detail and organization</div>
+                                <div class="quiz-option" onclick="selectOption(2, 'R')">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Technical and mechanical skills</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(2, 'I')">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Analytical and critical thinking</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(2, 'A')">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>Innovation and imagination</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(2, 'S')">
+                                    <i class="fas fa-comments"></i>
+                                    <span>Empathy and communication</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(2, 'E')">
+                                    <i class="fas fa-handshake"></i>
+                                    <span>Persuasion and negotiation</span>
+                                </div>
+                                <div class="quiz-option" onclick="selectOption(2, 'C')">
+                                    <i class="fas fa-magnifying-glass"></i>
+                                    <span>Attention to detail and organization</span>
+                                </div>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary" onclick="calculateCareer()">
-                            <i class="fas fa-chart-pie"></i> Get Career Suggestions
+                        <button class="btn btn-primary btn-large" onclick="calculateCareer()">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Get Career Suggestions</span>
+                            <div class="btn-glow"></div>
                         </button>
                     </div>
 
@@ -1802,17 +597,21 @@
 
             <!-- GAMES SECTION -->
             <section id="games" class="section">
-                <div class="card">
+                <div class="games-card">
                     <div class="card-header">
-                        <h2 class="card-title">AI Game Assistant 🎮</h2>
-                        <p class="card-subtitle">Let me recommend the perfect games based on your current mood</p>
+                        <h2 class="card-title">
+                            <i class="fas fa-gamepad"></i>
+                            AI Game Assistant
+                        </h2>
+                        <p class="card-subtitle">Personalized games with AI-generated mood-based songs</p>
                     </div>
                     
                     <div class="ai-chat">
                         <div class="chat-container" id="chatContainer">
                             <div class="chat-message ai">
                                 <div class="message-bubble">
-                                    Hello! I'm your AI game assistant. I'd love to recommend some games for you, but first, could you tell me how you're feeling today? 😊
+                                    <i class="fas fa-robot"></i>
+                                    Hello! I'm your AI game assistant. Tell me how you're feeling today, and I'll recommend the perfect games with personalized songs! 🎵
                                 </div>
                             </div>
                             <div class="typing-indicator" id="typingIndicator">
@@ -1823,18 +622,44 @@
                         </div>
                         
                         <div class="chat-input-container">
-                            <input type="text" id="chatInput" class="chat-input" placeholder="Type your response here..." onkeypress="handleChatKeyPress(event)">
+                            <div class="input-wrapper">
+                                <i class="fas fa-message input-icon"></i>
+                                <input 
+                                    type="text" 
+                                    id="chatInput" 
+                                    class="chat-input" 
+                                    placeholder="Tell me how you're feeling..."
+                                    onkeypress="handleChatKeyPress(event)"
+                                >
+                            </div>
                             <button class="btn btn-primary" onclick="sendChatMessage()">
-                                <i class="fas fa-paper-plane"></i> Send
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Game Recommendations -->
-                <div id="gameRecommendationsCard" class="card" style="display: none;">
+                <!-- Song Recommendations -->
+                <div id="songRecommendationsCard" class="song-recommendations-card" style="display: none;">
                     <div class="card-header">
-                        <h3 class="card-title">Recommended Games For You</h3>
+                        <h3 class="card-title">
+                            <i class="fas fa-music"></i>
+                            Your Personalized Mood Songs
+                        </h3>
+                    </div>
+                    <div class="song-list" id="songList">
+                        <!-- Songs will be dynamically loaded here -->
+                    </div>
+                </div>
+
+                <!-- Game Recommendations -->
+                <div id="gameRecommendationsCard" class="game-recommendations-card" style="display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-gamepad"></i>
+                            Recommended Games For You
+                        </h3>
                     </div>
                     <div class="game-recommendations" id="gameRecommendations">
                         <!-- Games will be dynamically loaded here -->
@@ -1844,18 +669,24 @@
                 <!-- Breathing Game -->
                 <div id="breathingGame" class="game-container">
                     <div class="card-header">
-                        <h3 class="card-title">Breathing Exercise 🧘</h3>
-                        <p class="card-subtitle">Follow the circle to regulate your breathing and reduce anxiety</p>
+                        <h3 class="card-title">
+                            <i class="fas fa-wind"></i>
+                            Cosmic Breathing
+                        </h3>
+                        <p class="card-subtitle">Follow the cosmic rhythm to find your inner peace</p>
                     </div>
                     
                     <div class="breathing-circle" id="breathingCircle">Ready</div>
                     
-                    <div class="timer-controls">
-                        <button class="btn btn-primary" onclick="startBreathing()">
-                            <i class="fas fa-play"></i> Start Exercise
+                    <div class="game-controls">
+                        <button class="btn btn-primary btn-large" onclick="startBreathing()">
+                            <i class="fas fa-play"></i>
+                            <span>Start Exercise</span>
+                            <div class="btn-glow"></div>
                         </button>
-                        <button class="btn btn-secondary" onclick="stopBreathing()">
-                            <i class="fas fa-stop"></i> Stop
+                        <button class="btn btn-secondary btn-large" onclick="stopBreathing()">
+                            <i class="fas fa-stop"></i>
+                            <span>Stop</span>
                         </button>
                     </div>
                 </div>
@@ -1863,22 +694,34 @@
                 <!-- Memory Game -->
                 <div id="memoryGame" class="game-container">
                     <div class="card-header">
-                        <h3 class="card-title">Memory Match 🧩</h3>
-                        <p class="card-subtitle">Find all matching pairs to improve focus and memory</p>
+                        <h3 class="card-title">
+                            <i class="fas fa-brain"></i>
+                            Cosmic Memory
+                        </h3>
+                        <p class="card-subtitle">Match the cosmic pairs to enhance your memory</p>
                     </div>
                     
                     <div class="game-score">
-                        <i class="fas fa-mouse-pointer"></i> Moves: <span id="memoryMoves">0</span> | 
-                        <i class="fas fa-check-circle"></i> Matches: <span id="memoryMatches">0</span>/<span id="memoryTotal">8</span>
+                        <i class="fas fa-mouse-pointer"></i>
+                        <span>Moves: </span>
+                        <span id="memoryMoves">0</span>
+                        <span class="score-separator">|</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Matches: </span>
+                        <span id="memoryMatches">0</span>
+                        <span>/</span>
+                        <span id="memoryTotal">8</span>
                     </div>
                     
                     <div class="memory-grid" id="memoryGrid">
                         <!-- Memory cards will be generated here -->
                     </div>
                     
-                    <div style="text-align: center; margin-top: 1.5rem;">
-                        <button class="btn btn-primary" onclick="initMemoryGame()">
-                            <i class="fas fa-redo"></i> New Game
+                    <div class="game-controls">
+                        <button class="btn btn-primary btn-large" onclick="initMemoryGame()">
+                            <i class="fas fa-redo"></i>
+                            <span>New Game</span>
+                            <div class="btn-glow"></div>
                         </button>
                     </div>
                 </div>
@@ -1886,14 +729,22 @@
                 <!-- Color Match Game -->
                 <div id="colorMatchGame" class="game-container">
                     <div class="card-header">
-                        <h3 class="card-title">Color Match Challenge 🎨</h3>
+                        <h3 class="card-title">
+                            <i class="fas fa-palette"></i>
+                            Cosmic Color Challenge
+                        </h3>
                         <p class="card-subtitle">Select the color that matches the text, not the word itself!</p>
                     </div>
                     
                     <div class="color-match-container">
                         <div class="game-score">
-                            <i class="fas fa-trophy"></i> Score: <span id="colorScore">0</span> | 
-                            <i class="fas fa-crown"></i> High Score: <span id="colorHighScore">0</span>
+                            <i class="fas fa-trophy"></i>
+                            <span>Score: </span>
+                            <span id="colorScore">0</span>
+                            <span class="score-separator">|</span>
+                            <i class="fas fa-crown"></i>
+                            <span>High Score: </span>
+                            <span id="colorHighScore">0</span>
                         </div>
                         
                         <div class="color-word" id="colorWord">Loading...</div>
@@ -1902,9 +753,11 @@
                             <!-- Color buttons will be generated here -->
                         </div>
                         
-                        <div style="text-align: center; margin-top: 1.5rem;">
-                            <button class="btn btn-primary" onclick="initColorMatch()">
-                                <i class="fas fa-sync"></i> New Round
+                        <div class="game-controls">
+                            <button class="btn btn-primary btn-large" onclick="initColorMatch()">
+                                <i class="fas fa-sync"></i>
+                                <span>New Round</span>
+                                <div class="btn-glow"></div>
                             </button>
                         </div>
                     </div>
@@ -1913,17 +766,23 @@
 
             <!-- JOURNAL SECTION -->
             <section id="journal" class="section">
-                <div class="card">
+                <div class="journal-card">
                     <div class="card-header">
-                        <h2 class="card-title">Your Journal 📖</h2>
-                        <p class="card-subtitle">Track your emotional journey over time</p>
+                        <h2 class="card-title">
+                            <i class="fas fa-book"></i>
+                            Your Cosmic Journal
+                        </h2>
+                        <p class="card-subtitle">Track your emotional journey through the cosmos</p>
                     </div>
                     <div id="journalList"></div>
                 </div>
 
-                <div class="mood-chart">
+                <div class="mood-chart-card">
                     <div class="card-header">
-                        <h3 class="card-title">Mood Distribution (Last 7 Entries)</h3>
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Emotional Distribution (Last 7 Entries)
+                        </h3>
                     </div>
                     <div id="moodChartBars"></div>
                 </div>
@@ -1935,1537 +794,46 @@
     <div id="cbtOverlay" class="cbt-overlay">
         <div class="cbt-modal">
             <div class="card-header">
-                <h3 class="card-title">Quick Mindfulness Check 🧘</h3>
+                <h3 class="card-title">
+                    <i class="fas fa-spa"></i>
+                    Quick Mindfulness Check
+                </h3>
             </div>
             <div id="cbtContent"></div>
-            <div class="btn-group" style="margin-top: 2rem;">
+            <div class="modal-actions">
                 <button class="btn btn-primary" onclick="nextCBTStep()">
-                    <i class="fas fa-arrow-right"></i> Continue
+                    <i class="fas fa-arrow-right"></i>
+                    <span>Continue</span>
                 </button>
                 <button class="btn btn-secondary" onclick="skipCBT()">
-                    <i class="fas fa-forward"></i> Skip
+                    <i class="fas fa-forward"></i>
+                    <span>Skip</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <script>
-        // ===== GLOBAL STATE =====
-        let currentUser = null;
-        let currentSection = 'home';
-        let timerInterval = null;
-        let timerSeconds = 0;
-        let timerRunning = false;
-        let quizAnswers = ['', '', ''];
-        let cbtStep = 0;
-        let cbtResponses = [];
-        let currentMood = 'Neutral';
-        let currentMoodScore = 0;
-
-        // Universe animation state
-        let universeAnimationId = null;
-        let planets = [];
-
-        // Game state
-        let breathingInterval = null;
-        let memoryCards = [];
-        let flippedCards = [];
-        let memoryMoves = 0;
-        let memoryMatches = 0;
-        let colorScore = 0;
-        let colorHighScore = 0;
-        let currentColorWord = '';
-        let currentColorText = '';
-
-        // Chat state
-        let chatState = 'initial';
-        let userMoodDescription = '';
-
-        // ===== LOGIN FUNCTIONALITY =====
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            const btnText = document.getElementById('btnText');
-            const messageDiv = document.getElementById('loginMessage');
-            
-            // Show loading state
-            loginBtn.disabled = true;
-            btnText.innerHTML = '<span class="loading-spinner"></span> Signing in...';
-            messageDiv.innerHTML = '';
-            
-            // Simulate authentication
-            setTimeout(() => {
-                if (email && password.length >= 4) {
-                    // Success
-                    currentUser = {
-                        email: email,
-                        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-                        avatar: email[0].toUpperCase(),
-                        provider: 'email'
-                    };
-                    
-                    messageDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> Login successful! Redirecting...</div>';
-                    
-                    setTimeout(() => {
-                        showMainApp();
-                    }, 1500);
-                } else {
-                    // Error
-                    messageDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> Invalid email or password. Please try again.</div>';
-                    loginBtn.disabled = false;
-                    btnText.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
-                }
-            }, 2000);
-        });
-
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = document.getElementById('eyeIcon');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.className = 'fas fa-eye-slash';
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.className = 'fas fa-eye';
-            }
-        }
-
-        function loginWithGoogle() {
-            const loginBtn = document.querySelector('.btn-google');
-            const originalContent = loginBtn.innerHTML;
-            
-            // Show loading state
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading-spinner"></span> Connecting to Google...';
-            
-            // Simulate Google OAuth
-            setTimeout(() => {
-                // Simulate successful Google login
-                currentUser = {
-                    email: 'user@gmail.com',
-                    name: 'Google User',
-                    avatar: 'G',
-                    provider: 'google',
-                    picture: 'https://picsum.photos/seed/google-user/100/100.jpg'
-                };
-                
-                const messageDiv = document.getElementById('loginMessage');
-                messageDiv.innerHTML = '<div class="alert alert-success"><i class="fab fa-google"></i> Successfully connected with Google!</div>';
-                
-                setTimeout(() => {
-                    showMainApp();
-                }, 1500);
-            }, 2000);
-        }
-
-        function quickDemo() {
-            const loginBtn = document.querySelector('.btn-demo');
-            const originalContent = loginBtn.innerHTML;
-            
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading-spinner"></span> Loading demo...';
-            
-            setTimeout(() => {
-                currentUser = {
-                    email: 'demo@mindverse.com',
-                    name: 'Demo User',
-                    avatar: 'D',
-                    provider: 'demo'
-                };
-                
-                const messageDiv = document.getElementById('loginMessage');
-                messageDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-rocket"></i> Entering demo mode...</div>';
-                
-                setTimeout(() => {
-                    showMainApp();
-                }, 1000);
-            }, 1500);
-        }
-
-        function showMainApp() {
-            // Update user info
-            document.getElementById('userName').textContent = currentUser.name;
-            document.getElementById('userEmail').textContent = currentUser.email;
-            document.getElementById('userAvatar').textContent = currentUser.avatar;
-            
-            // Hide login, show main app
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('mainApp').classList.add('active');
-            
-            // Initialize app
-            updateHomeStats();
-            updateTimerDisplay();
-            
-            // Add entrance animation
-            document.querySelectorAll('.stat-card').forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                currentUser = null;
-                document.getElementById('mainApp').classList.remove('active');
-                document.getElementById('loginPage').style.display = 'flex';
-                
-                // Reset form
-                document.getElementById('loginForm').reset();
-                document.getElementById('loginMessage').innerHTML = '';
-                document.getElementById('loginBtn').disabled = false;
-                document.getElementById('btnText').innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
-                
-                // Reset Google button
-                const googleBtn = document.querySelector('.btn-google');
-                googleBtn.disabled = false;
-                googleBtn.innerHTML = '<i class="fab fa-google"></i> Continue with Google';
-                
-                // Reset Demo button
-                const demoBtn = document.querySelector('.btn-demo');
-                demoBtn.disabled = false;
-                demoBtn.innerHTML = '<i class="fas fa-rocket"></i> Try Demo Mode';
-            }
-        }
-
-        // ===== EMOTION LEXICON =====
-        const emotionLexicon = {
-            positive: [
-                'happy', 'joy', 'excited', 'great', 'wonderful', 'amazing', 'love', 'blessed',
-                'grateful', 'peaceful', 'calm', 'relaxed', 'content', 'satisfied', 'proud',
-                'confident', 'energetic', 'motivated', 'inspired', 'hopeful', 'optimistic'
-            ],
-            negative: [
-                'sad', 'depressed', 'anxious', 'worried', 'stressed', 'angry', 'frustrated',
-                'upset', 'hurt', 'lonely', 'tired', 'exhausted', 'overwhelmed', 'confused',
-                'scared', 'afraid', 'nervous', 'irritated', 'disappointed', 'hopeless'
-            ],
-            neutral: ['okay', 'fine', 'normal', 'average', 'alright', 'meh']
-        };
-
-        // ===== GAME RECOMMENDATIONS =====
-        const gameRecommendations = {
-            'Happy': [
-                {
-                    id: 'colorMatch',
-                    title: 'Color Match Challenge',
-                    icon: '🎨',
-                    description: 'Test your focus with this fun color-matching game. Great for maintaining your positive energy!',
-                    mood: 'Happy'
-                },
-                {
-                    id: 'memory',
-                    title: 'Memory Match',
-                    icon: '🧩',
-                    description: 'Challenge your memory with this engaging card-matching game.',
-                    mood: 'Happy'
-                }
-            ],
-            'Calm': [
-                {
-                    id: 'breathing',
-                    title: 'Breathing Exercise',
-                    icon: '🧘',
-                    description: 'Enhance your state of calm with guided breathing exercises.',
-                    mood: 'Calm'
-                },
-                {
-                    id: 'colorMatch',
-                    title: 'Color Match Challenge',
-                    icon: '🎨',
-                    description: 'A gentle challenge to maintain your peaceful state.',
-                    mood: 'Calm'
-                }
-            ],
-            'Neutral': [
-                {
-                    id: 'memory',
-                    title: 'Memory Match',
-                    icon: '🧩',
-                    description: 'Engage your mind and boost your energy with this memory game.',
-                    mood: 'Neutral'
-                },
-                {
-                    id: 'colorMatch',
-                    title: 'Color Match Challenge',
-                    icon: '🎨',
-                    description: 'Add some excitement to your day with this color-matching game.',
-                    mood: 'Neutral'
-                }
-            ],
-            'Stressed': [
-                {
-                    id: 'breathing',
-                    title: 'Breathing Exercise',
-                    icon: '🧘',
-                    description: 'Reduce stress with guided breathing exercises designed to calm your nervous system.',
-                    mood: 'Stressed'
-                },
-                {
-                    id: 'memory',
-                    title: 'Memory Match',
-                    icon: '🧩',
-                    description: 'Shift your focus away from stressors with this engaging memory game.',
-                    mood: 'Stressed'
-                }
-            ],
-            'Anxious': [
-                {
-                    id: 'breathing',
-                    title: 'Breathing Exercise',
-                    icon: '🧘',
-                    description: 'Alleviate anxiety with structured breathing techniques that promote relaxation.',
-                    mood: 'Anxious'
-                },
-                {
-                    id: 'memory',
-                    title: 'Memory Match',
-                    icon: '🧩',
-                    description: 'Distract your mind from anxious thoughts with this focused memory game.',
-                    mood: 'Anxious'
-                }
-            ],
-            'Bored': [
-                {
-                    id: 'colorMatch',
-                    title: 'Color Match Challenge',
-                    icon: '🎨',
-                    description: 'Beat boredom with this engaging and challenging color-matching game.',
-                    mood: 'Bored'
-                },
-                {
-                    id: 'memory',
-                    title: 'Memory Match',
-                    icon: '🧩',
-                    description: 'Stimulate your mind and overcome boredom with this memory game.',
-                    mood: 'Bored'
-                }
-            ]
-        };
-
-        // ===== UTILITY FUNCTIONS =====
-        function showSection(sectionId) {
-            // Update nav buttons
-            document.querySelectorAll('.nav-link').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Update sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-            currentSection = sectionId;
-
-            // Load section-specific data
-            if (sectionId === 'journal') {
-                renderJournal();
-            } else if (sectionId === 'universe') {
-                renderUniverse();
-            } else if (sectionId === 'focus') {
-                updateFocusStats();
-            } else if (sectionId === 'home') {
-                updateHomeStats();
-            } else if (sectionId === 'games') {
-                initGameChat();
-            }
-        }
-
-        // ===== MOOD ANALYZER =====
-        function quickMood(emoji, label) {
-            document.getElementById('moodText').value = `I'm feeling ${label.toLowerCase()} today ${emoji}`;
-            analyzeMood();
-        }
-
-        function analyzeMood() {
-            const text = document.getElementById('moodText').value.trim();
-            
-            if (!text) {
-                alert('Please write something or select an emoji!');
-                return;
-            }
-
-            // Simulated AI sentiment analysis
-            const words = text.toLowerCase().split(/\s+/);
-            let positiveCount = 0;
-            let negativeCount = 0;
-            let neutralCount = 0;
-
-            words.forEach(word => {
-                if (emotionLexicon.positive.some(p => word.includes(p))) positiveCount++;
-                if (emotionLexicon.negative.some(n => word.includes(n))) negativeCount++;
-                if (emotionLexicon.neutral.some(n => word.includes(n))) neutralCount++;
-            });
-
-            // Calculate score (-100 to 100)
-            const totalEmotional = positiveCount + negativeCount || 1;
-            const score = Math.round(((positiveCount - negativeCount) / totalEmotional) * 100);
-
-            // Determine mood label
-            let moodLabel, moodEmoji;
-            if (score >= 50) {
-                moodLabel = 'Happy';
-                moodEmoji = '😊';
-            } else if (score >= 20) {
-                moodLabel = 'Calm';
-                moodEmoji = '😌';
-            } else if (score >= -20) {
-                moodLabel = 'Neutral';
-                moodEmoji = '😐';
-            } else if (score >= -50) {
-                moodLabel = 'Stressed';
-                moodEmoji = '😰';
-            } else {
-                moodLabel = 'Anxious';
-                moodEmoji = '😫';
-            }
-
-            // Update global mood state
-            currentMood = moodLabel;
-            currentMoodScore = score;
-
-            // Display result
-            document.getElementById('moodLabel').textContent = moodLabel;
-            document.getElementById('moodEmoji').textContent = moodEmoji;
-            document.getElementById('moodScore').textContent = score;
-            document.getElementById('moodSummary').textContent = 
-                `Based on your entry, you seem to be feeling ${moodLabel.toLowerCase()}. ${getMoodAdvice(moodLabel)}`;
-            document.getElementById('moodResult').style.display = 'block';
-
-            // Save entry
-            saveEntry(text, moodLabel, score, moodEmoji);
-        }
-
-        function getMoodAdvice(mood) {
-            const advice = {
-                'Happy': 'Keep up the positive energy! Consider journaling what made you feel this way.',
-                'Calm': 'A peaceful state is wonderful. This is a great time for reflection or creative work.',
-                'Neutral': 'Feeling balanced is okay. Try a focus session to energize yourself.',
-                'Stressed': 'Take a deep breath. Consider trying our Focus Mode or writing more about what\'s on your mind.',
-                'Anxious': 'It\'s okay to feel this way. Try our CBT-guided focus session or reach out to someone you trust.'
-            };
-            return advice[mood] || 'Remember to be kind to yourself today.';
-        }
-
-        // ===== DATA PERSISTENCE =====
-        function saveEntry(text, mood, score, emoji) {
-            const entries = getEntries();
-            const entry = {
-                id: Date.now(),
-                date: new Date().toISOString(),
-                text: text,
-                mood: mood,
-                score: score,
-                emoji: emoji
-            };
-            entries.push(entry);
-            localStorage.setItem('mindverse_entries', JSON.stringify(entries));
-            
-            // Show success notification
-            showNotification('✨ Mood entry saved to your journal!', 'success');
-            document.getElementById('moodText').value = '';
-        }
-
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `alert alert-${type}`;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 3000;
-                min-width: 300px;
-                animation: slideInRight 0.3s ease-out;
-            `;
-            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease-out';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        function getEntries() {
-            const stored = localStorage.getItem('mindverse_entries');
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function deleteEntry(id) {
-            if (!confirm('Delete this entry?')) return;
-            
-            const entries = getEntries().filter(e => e.id !== id);
-            localStorage.setItem('mindverse_entries', JSON.stringify(entries));
-            renderJournal();
-            showNotification('Entry deleted successfully', 'success');
-        }
-
-        function getFocusData() {
-            const stored = localStorage.getItem('mindverse_focus');
-            return stored ? JSON.parse(stored) : { sessions: 0, streak: 0, totalMinutes: 0, lastDate: null };
-        }
-
-        function saveFocusData(data) {
-            localStorage.setItem('mindverse_focus', JSON.stringify(data));
-        }
-
-        function getPlanetGrowth() {
-            return parseInt(localStorage.getItem('mindverse_growth') || '0');
-        }
-
-        function incrementPlanetGrowth() {
-            const current = getPlanetGrowth();
-            localStorage.setItem('mindverse_growth', (current + 1).toString());
-        }
-
-        // ===== JOURNAL RENDERING =====
-        function renderJournal() {
-            const entries = getEntries().sort((a, b) => b.id - a.id);
-            const container = document.getElementById('journalList');
-            
-            if (entries.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No entries yet. Start by analyzing your mood!</p>';
-                document.getElementById('moodChartBars').innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No data to display</p>';
-                return;
-            }
-
-            container.innerHTML = entries.map(entry => {
-                const date = new Date(entry.date);
-                const borderColor = getMoodColor(entry.mood);
-                return `
-                    <div class="journal-entry" style="border-left-color: ${borderColor}">
-                        <div class="journal-header">
-                            <div>
-                                <strong>${entry.emoji} ${entry.mood}</strong> - ${date.toLocaleDateString()} ${date.toLocaleTimeString()}
-                            </div>
-                            <div class="journal-actions">
-                                <button class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="deleteEntry(${entry.id})">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </div>
-                        </div>
-                        <p style="margin-top: 0.5rem; color: var(--text-secondary);">${entry.text.substring(0, 150)}${entry.text.length > 150 ? '...' : ''}</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.85rem;"><strong>Score:</strong> ${entry.score}</p>
-                    </div>
-                `;
-            }).join('');
-
-            // Render mood chart
-            renderMoodChart(entries);
-        }
-
-        function renderMoodChart(entries) {
-            const last7 = entries.slice(0, 7);
-            const moodCounts = {};
-            
-            last7.forEach(entry => {
-                moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
-            });
-
-            const maxCount = Math.max(...Object.values(moodCounts), 1);
-            const chartHtml = Object.entries(moodCounts).map(([mood, count]) => {
-                const percentage = (count / maxCount) * 100;
-                return `
-                    <div class="chart-bar">
-                        <div class="chart-label">${mood}</div>
-                        <div class="chart-bar-fill" style="width: ${percentage}%"></div>
-                        <span class="chart-value">${count}</span>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('moodChartBars').innerHTML = chartHtml || '<p style="text-align: center; color: var(--text-muted);">No data</p>';
-        }
-
-        function getMoodColor(mood) {
-            const colors = {
-                'Happy': '#10b981',
-                'Calm': '#3b82f6',
-                'Neutral': '#6b7280',
-                'Stressed': '#f59e0b',
-                'Anxious': '#ef4444',
-                'Bored': '#8b5cf6'
-            };
-            return colors[mood] || '#6b7280';
-        }
-
-        // ===== UNIVERSE VISUALIZATION =====
-        function renderUniverse() {
-            const canvas = document.getElementById('universeCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Set canvas size
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-
-            // Get last 7 entries
-            const entries = getEntries().slice(-7);
-            const growth = getPlanetGrowth();
-            
-            document.getElementById('planetGrowth').textContent = growth;
-
-            // Create planet objects
-            planets = entries.map((entry, index) => {
-                const angle = (index / 7) * Math.PI * 2;
-                const radius = 150 + (index * 10);
-                
-                return {
-                    x: canvas.width / 2 + Math.cos(angle) * radius,
-                    y: canvas.height / 2 + Math.sin(angle) * radius,
-                    size: 20 + (entry.score + 100) / 10 + growth * 2,
-                    color: getMoodColor(entry.mood),
-                    entry: entry,
-                    angle: angle,
-                    radius: radius,
-                    orbitSpeed: 0.001 + (index * 0.0002)
-                };
-            });
-
-            // Start animation
-            if (universeAnimationId) {
-                cancelAnimationFrame(universeAnimationId);
-            }
-            animateUniverse(ctx, canvas);
-
-            // Add click handler
-            canvas.onclick = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                planets.forEach(planet => {
-                    const dx = x - planet.x;
-                    const dy = y - planet.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < planet.size) {
-                        showPlanetDetail(planet.entry);
-                    }
-                });
-            };
-        }
-
-        function animateUniverse(ctx, canvas) {
-            // Clear canvas
-            ctx.fillStyle = '#0a0e27';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw stars
-            for (let i = 0; i < 100; i++) {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.beginPath();
-                ctx.arc(
-                    Math.random() * canvas.width,
-                    Math.random() * canvas.height,
-                    Math.random() * 1.5,
-                    0,
-                    Math.PI * 2
-                );
-                ctx.fill();
-            }
-
-            // Draw center sun
-            const gradient = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, 50);
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(1, '#764ba2');
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, 30, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Update and draw planets
-            planets.forEach((planet, index) => {
-                // Update position (orbit)
-                planet.angle += planet.orbitSpeed;
-                planet.x = canvas.width / 2 + Math.cos(planet.angle) * planet.radius;
-                planet.y = canvas.height / 2 + Math.sin(planet.angle) * planet.radius;
-
-                // Draw orbit path
-                ctx.strokeStyle = 'rgba(102, 126, 234, 0.2)';
-                ctx.beginPath();
-                ctx.arc(canvas.width / 2, canvas.height / 2, planet.radius, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // Draw planet
-                const planetGradient = ctx.createRadialGradient(planet.x, planet.y, 0, planet.x, planet.y, planet.size);
-                planetGradient.addColorStop(0, planet.color);
-                planetGradient.addColorStop(1, '#1a1f3a');
-                ctx.fillStyle = planetGradient;
-                ctx.beginPath();
-                ctx.arc(planet.x, planet.y, planet.size, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Draw glow
-                ctx.strokeStyle = planet.color + '60';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.arc(planet.x, planet.y, planet.size + 5, 0, Math.PI * 2);
-                ctx.stroke();
-            });
-
-            universeAnimationId = requestAnimationFrame(() => animateUniverse(ctx, canvas));
-        }
-
-        function showPlanetDetail(entry) {
-            const date = new Date(entry.date);
-            document.getElementById('planetDetailContent').innerHTML = `
-                <p><strong><i class="fas fa-calendar"></i> Date:</strong> ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</p>
-                <p><strong><i class="fas fa-smile"></i> Mood:</strong> ${entry.emoji} ${entry.mood}</p>
-                <p><strong><i class="fas fa-chart-line"></i> Score:</strong> ${entry.score}</p>
-                <p style="margin-top: 1rem;"><strong><i class="fas fa-pen"></i> Entry:</strong></p>
-                <p style="color: var(--text-secondary); margin-top: 0.5rem;">${entry.text}</p>
-            `;
-            document.getElementById('planetDetail').style.display = 'block';
-        }
-
-        function closePlanetDetail() {
-            document.getElementById('planetDetail').style.display = 'none';
-        }
-
-        // ===== FOCUS MODE / POMODORO =====
-        function startFocusSession() {
-            // Check if user is anxious/stressed
-            const recentEntries = getEntries().slice(-3);
-            const hasAnxiety = recentEntries.some(e => e.mood === 'Anxious' || e.mood === 'Stressed');
-
-            if (hasAnxiety && !localStorage.getItem('cbt_completed_today')) {
-                // Show CBT prompts
-                showCBTPrompts();
-            } else {
-                beginFocusTimer();
-            }
-        }
-
-        function beginFocusTimer() {
-            if (timerRunning) return;
-
-            const minutes = parseInt(document.getElementById('sessionLength').value);
-            timerSeconds = minutes * 60;
-            timerRunning = true;
-
-            timerInterval = setInterval(() => {
-                if (timerSeconds > 0) {
-                    timerSeconds--;
-                    updateTimerDisplay();
-                } else {
-                    completeFocusSession();
-                }
-            }, 1000);
-
-            updateTimerDisplay();
-            showNotification('Focus session started! Stay focused 🎯', 'info');
-        }
-
-        function pauseTimer() {
-            timerRunning = false;
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            showNotification('Timer paused', 'info');
-        }
- 
-        function resetTimer() {
-            pauseTimer();
-            const minutes = parseInt(document.getElementById('sessionLength').value);
-            timerSeconds = minutes * 60;
-            updateTimerDisplay();
-            showNotification('Timer reset', 'info');
-        }
-
-        function updateTimerDisplay() {
-            const mins = Math.floor(timerSeconds / 60);
-            const secs = timerSeconds % 60;
-            document.getElementById('timerDisplay').textContent = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function completeFocusSession() {
-            pauseTimer();
-            
-            // Update focus data
-            const focusData = getFocusData();
-            const today = new Date().toDateString();
-            
-            focusData.sessions++;
-            focusData.totalMinutes += parseInt(document.getElementById('sessionLength').value);
-            
-            if (focusData.lastDate === today) {
-                // Same day
-            } else if (focusData.lastDate === new Date(Date.now() - 86400000).toDateString()) {
-                // Consecutive day
-                focusData.streak++;
-            } else {
-                // Streak broken
-                focusData.streak = 1;
-            }
-            
-            focusData.lastDate = today;
-            saveFocusData(focusData);
-
-            // Increment planet growth
-            incrementPlanetGrowth();
-
-            // Reset timer
-            const minutes = parseInt(document.getElementById('sessionLength').value);
-            timerSeconds = minutes * 60;
-            updateTimerDisplay();
-
-            updateFocusStats();
-            showNotification('🎉 Focus session complete! Your universe has grown! 🌱', 'success');
-        }
-
-        function updateFocusStats() {
-            const data = getFocusData();
-            document.getElementById('totalSessions').textContent = data.sessions;
-            document.getElementById('focusStreak').textContent = data.streak;
-            document.getElementById('totalMinutes').textContent = data.totalMinutes;
-        }
-
-        // ===== CBT PROMPTS =====
-        function showCBTPrompts() {
-            cbtStep = 0;
-            cbtResponses = [];
-            document.getElementById('cbtOverlay').classList.add('active');
-            displayCBTStep();
-        }
-
-        function displayCBTStep() {
-            const prompts = [
-                {
-                    question: 'What thought is making you feel anxious or stressed right now?',
-                    placeholder: 'E.g., "I\'m worried I won\'t finish this project on time"'
-                },
-                {
-                    question: 'Is there evidence that contradicts this thought? What\'s a more balanced perspective?',
-                    placeholder: 'E.g., "I\'ve completed similar projects before, and I have support if needed"'
-                }
-            ];
-
-            if (cbtStep < prompts.length) {
-                const prompt = prompts[cbtStep];
-                document.getElementById('cbtContent').innerHTML = `
-                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">${prompt.question}</p>
-                    <textarea id="cbtInput" placeholder="${prompt.placeholder}" style="width: 100%; min-height: 120px;"></textarea>
-                `;
-            }
-        }
-
-        function nextCBTStep() {
-            const input = document.getElementById('cbtInput')?.value;
-            if (input && input.trim()) {
-                cbtResponses.push(input);
-            }
-
-            cbtStep++;
-
-            if (cbtStep >= 2) {
-                // Complete CBT
-                document.getElementById('cbtOverlay').classList.remove('active');
-                localStorage.setItem('cbt_completed_today', new Date().toDateString());
-                showNotification('Great work on the mindfulness exercise! Now let\'s focus. 🧘', 'success');
-                beginFocusTimer();
-            } else {
-                displayCBTStep();
-            }
-        }
-
-        function skipCBT() {
-            document.getElementById('cbtOverlay').classList.remove('active');
-            beginFocusTimer();
-        }
-
-        // ===== CAREER QUIZ =====
-        function selectOption(questionIndex, type) {
-            // Remove previous selection
-            const question = document.querySelectorAll('.quiz-question')[questionIndex];
-            question.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-
-            // Add selection
-            event.target.classList.add('selected');
-            quizAnswers[questionIndex] = type;
-        }
-
-        function calculateCareer() {
-            // Check if all answered
-            if (quizAnswers.includes('')) {
-                alert('Please answer all questions!');
-                return;
-            }
-
-            // Count RAISEC types
-            const counts = {};
-            quizAnswers.forEach(answer => {
-                counts[answer] = (counts[answer] || 0) + 1;
-            });
-
-            // Sort by frequency
-            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-            const topTypes = sorted.slice(0, 3).map(([type]) => type);
-
-            // Get career suggestions
-            const careers = getCareerSuggestions(topTypes);
-
-            // Display results
-            displayCareerResults(careers);
-        }
-
-        function getCareerSuggestions(types) {
-            const careerMap = {
-                'R': {
-                    title: 'Realistic - The Doer',
-                    careers: ['Mechanical Engineer', 'Electrician', 'Software Developer'],
-                    steps: [
-                        'Explore technical certifications or engineering programs',
-                        'Build hands-on projects to develop practical skills'
-                    ]
-                },
-                'I': {
-                    title: 'Investigative - The Thinker',
-                    careers: ['Data Scientist', 'Research Scientist', 'Systems Analyst'],
-                    steps: [
-                        'Pursue advanced education in your field of interest',
-                        'Start a research project or contribute to open-source'
-                    ]
-                },
-                'A': {
-                    title: 'Artistic - The Creator',
-                    careers: ['UX Designer', 'Content Creator', 'Marketing Specialist'],
-                    steps: [
-                        'Build a portfolio showcasing your creative work',
-                        'Network with creative professionals in your area of interest'
-                    ]
-                },
-                'S': {
-                    title: 'Social - The Helper',
-                    careers: ['Teacher', 'Counselor', 'Healthcare Professional'],
-                    steps: [
-                        'Volunteer in community service or mentoring programs',
-                        'Consider certifications in counseling or education'
-                    ]
-                },
-                'E': {
-                    title: 'Enterprising - The Persuader',
-                    careers: ['Entrepreneur', 'Sales Manager', 'Business Consultant'],
-                    steps: [
-                        'Develop leadership skills through team projects',
-                        'Consider an MBA or entrepreneurship program'
-                    ]
-                },
-                'C': {
-                    title: 'Conventional - The Organizer',
-                    careers: ['Accountant', 'Project Manager', 'Financial Analyst'],
-                    steps: [
-                        'Pursue certifications like CPA or PMP',
-                        'Gain experience with data management and analytics tools'
-                    ]
-                }
-            };
-
-            return types.map(type => careerMap[type]);
-        }
-
-        function displayCareerResults(careers) {
-            const html = careers.map((career, index) => `
-                <div class="card" style="margin-bottom: 1.5rem;">
-                    <h3><i class="fas fa-trophy"></i> ${index + 1}. ${career.title}</h3>
-                    <p style="margin-top: 1rem;"><strong><i class="fas fa-briefcase"></i> Potential Careers:</strong></p>
-                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
-                        ${career.careers.map(c => `<li>${c}</li>`).join('')}
-                    </ul>
-                    <p style="margin-top: 1.5rem;"><strong><i class="fas fa-road"></i> Next Steps:</strong></p>
-                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
-                        ${career.steps.map(s => `<li>${s}</li>`).join('')}
-                    </ol>
-                </div>
-            `).join('');
-
-            document.getElementById('careerResults').innerHTML = `
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-chart-pie"></i> Your Top Career Paths 🎯</h3>
-                </div>
-                ${html}
-            `;
-            document.getElementById('careerResults').style.display = 'block';
-            document.querySelector('.quiz-container').style.display = 'none';
-        }
-
-        // ===== GAMES SECTION - AI CHAT =====
-        function initGameChat() {
-            // Reset chat state
-            chatState = 'initial';
-            userMoodDescription = '';
-            
-            // Clear chat container except for initial message
-            const chatContainer = document.getElementById('chatContainer');
-            chatContainer.innerHTML = `
-                <div class="chat-message ai">
-                    <div class="message-bubble">
-                        Hello! I'm your AI game assistant. I'd love to recommend some games for you, but first, could you tell me how you're feeling today? 😊
-                    </div>
-                </div>
-                <div class="typing-indicator" id="typingIndicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            `;
-            
-            // Hide game recommendations
-            document.getElementById('gameRecommendationsCard').style.display = 'none';
-            
-            // Hide all games
-            document.querySelectorAll('.game-container').forEach(container => {
-                container.classList.remove('active');
-            });
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            // Add user message to chat
-            addChatMessage('user', message);
-            input.value = '';
-            
-            // Process based on current state
-            if (chatState === 'initial') {
-                // User is describing their mood
-                userMoodDescription = message;
-                chatState = 'analyzing';
-                
-                // Show typing indicator
-                showTypingIndicator();
-                
-                // Simulate AI processing
-                setTimeout(() => {
-                    hideTypingIndicator();
-                    analyzeMoodFromChat(message);
-                }, 1500);
-            } else if (chatState === 'recommendations') {
-                // User is responding to recommendations
-                if (message.toLowerCase().includes('breath') || message.toLowerCase().includes('relax')) {
-                    launchGame('breathing');
-                } else if (message.toLowerCase().includes('memory') || message.toLowerCase().includes('match')) {
-                    launchGame('memory');
-                } else if (message.toLowerCase().includes('color') || message.toLowerCase().includes('challenge')) {
-                    launchGame('colorMatch');
-                } else {
-                    addChatMessage('ai', "I'm not sure which game you're referring to. You can click on any of the recommended games above to start playing!");
-                }
-            }
-        }
-
-        function handleChatKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendChatMessage();
-            }
-        }
-
-        function addChatMessage(sender, message) {
-            const chatContainer = document.getElementById('chatContainer');
-            const messageElement = document.createElement('div');
-            messageElement.className = `chat-message ${sender}`;
-            
-            const bubbleElement = document.createElement('div');
-            bubbleElement.className = 'message-bubble';
-            bubbleElement.textContent = message;
-            
-            messageElement.appendChild(bubbleElement);
-            
-            // Insert before typing indicator
-            const typingIndicator = document.getElementById('typingIndicator');
-            chatContainer.insertBefore(messageElement, typingIndicator);
-            
-            // Scroll to bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function showTypingIndicator() {
-            document.getElementById('typingIndicator').classList.add('active');
-            
-            // Scroll to bottom
-            const chatContainer = document.getElementById('chatContainer');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        function hideTypingIndicator() {
-            document.getElementById('typingIndicator').classList.remove('active');
-        }
-
-        function analyzeMoodFromChat(message) {
-            // Simulated AI sentiment analysis
-            const words = message.toLowerCase().split(/\s+/);
-            let positiveCount = 0;
-            let negativeCount = 0;
-            let neutralCount = 0;
-
-            words.forEach(word => {
-                if (emotionLexicon.positive.some(p => word.includes(p))) positiveCount++;
-                if (emotionLexicon.negative.some(n => word.includes(n))) negativeCount++;
-                if (emotionLexicon.neutral.some(n => word.includes(n))) neutralCount++;
-            });
-
-            // Calculate score (-100 to 100)
-            const totalEmotional = positiveCount + negativeCount || 1;
-            const score = Math.round(((positiveCount - negativeCount) / totalEmotional) * 100);
-
-            // Determine mood label
-            let moodLabel, moodEmoji;
-            if (score >= 50) {
-                moodLabel = 'Happy';
-                moodEmoji = '😊';
-            } else if (score >= 20) {
-                moodLabel = 'Calm';
-                moodEmoji = '😌';
-            } else if (score >= -20) {
-                moodLabel = 'Neutral';
-                moodEmoji = '😐';
-            } else if (score >= -50) {
-                moodLabel = 'Stressed';
-                moodEmoji = '😰';
-            } else {
-                moodLabel = 'Anxious';
-                moodEmoji = '😫';
-            }
-
-            // Update global mood state
-            currentMood = moodLabel;
-            currentMoodScore = score;
-
-            // Add AI response
-            addChatMessage('ai', `Thanks for sharing! Based on what you've told me, it sounds like you're feeling ${moodLabel.toLowerCase()} ${moodEmoji}. Let me recommend some games that might help with that.`);
-            
-            // Show typing indicator
-            showTypingIndicator();
-            
-            // Simulate AI processing
-            setTimeout(() => {
-                hideTypingIndicator();
-                recommendGames(moodLabel);
-            }, 1500);
-        }
-
-        function recommendGames(mood) {
-            // Get game recommendations for this mood
-            const recommendations = gameRecommendations[mood] || gameRecommendations['Neutral'];
-            
-            // Add AI response with game recommendations
-            let message = "Based on your mood, I recommend these games:\n\n";
-            
-            recommendations.forEach((game, index) => {
-                message += `${index + 1}. ${game.title} ${game.icon}\n${game.description}\n\n`;
-            });
-            
-            message += "Just click on any game to start playing, or tell me which one interests you!";
-            
-            addChatMessage('ai', message);
-            
-            // Update game recommendations card
-            const gameCardsHtml = recommendations.map(game => `
-                <div class="game-card" onclick="launchGame('${game.id}')">
-                    <div class="game-icon">${game.icon}</div>
-                    <h3 class="game-title">${game.title}</h3>
-                    <p class="game-description">${game.description}</p>
-                    <button class="btn btn-primary" style="margin-top: 1.5rem;">
-                        <i class="fas fa-play"></i> Play Now
-                    </button>
-                </div>
-            `).join('');
-            
-            document.getElementById('gameRecommendations').innerHTML = gameCardsHtml;
-            document.getElementById('gameRecommendationsCard').style.display = 'block';
-            
-            // Update chat state
-            chatState = 'recommendations';
-        }
-
-        function launchGame(gameId) {
-            // Hide all games
-            document.querySelectorAll('.game-container').forEach(container => {
-                container.classList.remove('active');
-            });
-            
-            // Show selected game
-            document.getElementById(`${gameId}Game`).classList.add('active');
-            
-            // Add AI message
-            const game = Object.values(gameRecommendations).flat().find(g => g.id === gameId);
-            if (game) {
-                addChatMessage('ai', `Great choice! I've loaded ${game.title} for you. Enjoy playing! 🎮`);
-            }
-            
-            // Initialize the game
-            if (gameId === 'memory') {
-                initMemoryGame();
-            } else if (gameId === 'colorMatch') {
-                initColorMatch();
-            }
-            
-            // Update chat state
-            chatState = 'playing';
-        }
-
-        // ===== BREATHING GAME =====
-        function startBreathing() {
-            const circle = document.getElementById('breathingCircle');
-            let phase = 'inhale';
-            let phaseTime = 0;
-            
-            // Clear any existing interval
-            stopBreathing();
-            
-            // Start breathing cycle
-            breathingInterval = setInterval(() => {
-                phaseTime++;
-                
-                if (phase === 'inhale') {
-                    circle.textContent = 'Inhale';
-                    circle.className = 'breathing-circle inhale';
-                    
-                    if (phaseTime >= 4) {
-                        phase = 'hold';
-                        phaseTime = 0;
-                    }
-                } else if (phase === 'hold') {
-                    circle.textContent = 'Hold';
-                    circle.className = 'breathing-circle hold';
-                    
-                    if (phaseTime >= 4) {
-                        phase = 'exhale';
-                        phaseTime = 0;
-                    }
-                } else if (phase === 'exhale') {
-                    circle.textContent = 'Exhale';
-                    circle.className = 'breathing-circle exhale';
-                    
-                    if (phaseTime >= 4) {
-                        phase = 'inhale';
-                        phaseTime = 0;
-                    }
-                }
-            }, 1000);
-            
-            showNotification('Breathing exercise started. Follow the circle! 🧘', 'info');
-        }
-
-        function stopBreathing() {
-            if (breathingInterval) {
-                clearInterval(breathingInterval);
-                breathingInterval = null;
-            }
-            
-            const circle = document.getElementById('breathingCircle');
-            circle.textContent = 'Ready';
-            circle.className = 'breathing-circle';
-        }
-
-        // ===== MEMORY GAME =====
-        function initMemoryGame() {
-            // Reset game state
-            memoryCards = [];
-            flippedCards = [];
-            memoryMoves = 0;
-            memoryMatches = 0;
-            
-            // Create card pairs
-            const emojis = ['🌟', '🎈', '🌺', '🍀', '🎨', '🎵', '🌈', '🦋'];
-            const cardPairs = [...emojis, ...emojis];
-            
-            // Shuffle cards
-            for (let i = cardPairs.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [cardPairs[i], cardPairs[j]] = [cardPairs[j], cardPairs[i]];
-            }
-            
-            // Create card objects
-            memoryCards = cardPairs.map((emoji, index) => ({
-                id: index,
-                emoji: emoji,
-                flipped: false,
-                matched: false
-            }));
-            
-            // Update UI
-            updateMemoryUI();
-        }
-
-        function updateMemoryUI() {
-            const grid = document.getElementById('memoryGrid');
-            
-            // Render cards
-            grid.innerHTML = memoryCards.map(card => `
-                <div class="memory-card ${card.flipped ? 'flipped' : ''} ${card.matched ? 'matched' : ''}" 
-                     onclick="flipMemoryCard(${card.id})">
-                    ${card.flipped || card.matched ? card.emoji : ''}
-                </div>
-            `).join('');
-            
-            // Update score
-            document.getElementById('memoryMoves').textContent = memoryMoves;
-            document.getElementById('memoryMatches').textContent = memoryMatches;
-            document.getElementById('memoryTotal').textContent = memoryCards.length / 2;
-            
-            // Check for win
-            if (memoryMatches === memoryCards.length / 2) {
-                setTimeout(() => {
-                    showNotification(`🎉 Congratulations! You completed the game in ${memoryMoves} moves!`, 'success');
-                }, 500);
-            }
-        }
-
-        function flipMemoryCard(cardId) {
-            const card = memoryCards.find(c => c.id === cardId);
-            
-            // Can't flip if already flipped or matched
-            if (card.flipped || card.matched) return;
-            
-            // Can't flip if already 2 cards are flipped
-            if (flippedCards.length >= 2) return;
-            
-            // Flip the card
-            card.flipped = true;
-            flippedCards.push(card);
-            
-            // Update UI
-            updateMemoryUI();
-            
-            // Check for match if 2 cards are flipped
-            if (flippedCards.length === 2) {
-                memoryMoves++;
-                
-                if (flippedCards[0].emoji === flippedCards[1].emoji) {
-                    // Match found
-                    flippedCards[0].matched = true;
-                    flippedCards[1].matched = true;
-                    memoryMatches++;
-                    flippedCards = [];
-                    
-                    updateMemoryUI();
-                } else {
-                    // No match, flip back after delay
-                    setTimeout(() => {
-                        flippedCards[0].flipped = false;
-                        flippedCards[1].flipped = false;
-                        flippedCards = [];
-                        updateMemoryUI();
-                    }, 1000);
-                }
-            }
-        }
-
-        // ===== COLOR MATCH GAME =====
-        function initColorMatch() {
-            // Get high score
-            colorHighScore = parseInt(localStorage.getItem('colorHighScore') || '0');
-            document.getElementById('colorHighScore').textContent = colorHighScore;
-            
-            // Reset score
-            colorScore = 0;
-            document.getElementById('colorScore').textContent = colorScore;
-            
-            // Generate new round
-            generateColorRound();
-        }
-
-        function generateColorRound() {
-            const colors = [
-                { name: 'Red', value: '#ef4444' },
-                { name: 'Blue', value: '#3b82f6' },
-                { name: 'Green', value: '#10b981' },
-                { name: 'Yellow', value: '#f59e0b' },
-                { name: 'Purple', value: '#8b5cf6' },
-                { name: 'Pink', value: '#ec4899' }
-            ];
-            
-            // Select random color for text
-            const textColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            // Select random color name (may be different from text color)
-            const colorNames = colors.map(c => c.name);
-            const colorName = colorNames[Math.floor(Math.random() * colorNames.length)];
-            
-            // Store current round data
-            currentColorText = colorName;
-            currentColorWord = textColor.value;
-            
-            // Display the word with the text color
-            const wordElement = document.getElementById('colorWord');
-            wordElement.textContent = colorName;
-            wordElement.style.color = textColor.value;
-            
-            // Create color options (include the correct answer)
-            const options = [textColor.value];
-            
-            // Add random wrong options
-            while (options.length < 4) {
-                const randomColor = colors[Math.floor(Math.random() * colors.length)].value;
-                if (!options.includes(randomColor)) {
-                    options.push(randomColor);
-                }
-            }
-            
-            // Shuffle options
-            for (let i = options.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [options[i], options[j]] = [options[j], options[i]];
-            }
-            
-            // Render color buttons
-            const optionsHtml = options.map(color => `
-                <button class="color-btn" style="background-color: ${color};" 
-                        onclick="checkColorMatch('${color}')"></button>
-            `).join('');
-            
-            document.getElementById('colorOptions').innerHTML = optionsHtml;
-        }
-
-        function checkColorMatch(selectedColor) {
-            if (selectedColor === currentColorWord) {
-                // Correct answer
-                colorScore++;
-                document.getElementById('colorScore').textContent = colorScore;
-                
-                // Check for new high score
-                if (colorScore > colorHighScore) {
-                    colorHighScore = colorScore;
-                    localStorage.setItem('colorHighScore', colorHighScore.toString());
-                    document.getElementById('colorHighScore').textContent = colorHighScore;
-                }
-                
-                // Generate new round
-                generateColorRound();
-            } else {
-                // Wrong answer
-                document.getElementById('colorScore').textContent = 'Game Over!';
-                
-                setTimeout(() => {
-                    if (confirm(`Game Over! Your score: ${colorScore}. Play again?`)) {
-                        initColorMatch();
-                    }
-                }, 500);
-            }
-        }
-
-        // ===== HOME STATS =====
-        function updateHomeStats() {
-            const entries = getEntries();
-            const focusData = getFocusData();
-            const growth = getPlanetGrowth();
-            
-            document.getElementById('homeEntryCount').textContent = entries.length;
-            document.getElementById('homeFocusCount').textContent = focusData.sessions;
-            document.getElementById('homeStreak').textContent = focusData.streak;
-            document.getElementById('homeGrowth').textContent = growth;
-        }
-
-        // ===== DEMO & RESET =====
-        function populateDemoData() {
-            if (!confirm('Load demo data? This will add 7 sample entries.')) return;
-
-            const demoEntries = [
-                { text: 'Had a great day at work! Finished my project early and got positive feedback.', mood: 'Happy', score: 75, emoji: '😊' },
-                { text: 'Feeling calm and peaceful after my morning meditation. Ready for the day.', mood: 'Calm', score: 45, emoji: '😌' },
-                { text: 'Not much happening today. Just going through the motions.', mood: 'Neutral', score: 0, emoji: '😐' },
-                { text: 'A bit stressed about the upcoming deadline. Need to organize my tasks better.', mood: 'Stressed', score: -35, emoji: '😰' },
-                { text: 'Feeling overwhelmed with everything on my plate. Need to take a break.', mood: 'Anxious', score: -60, emoji: '😫' },
-                { text: 'Grateful for my friends and family. Had a wonderful dinner together.', mood: 'Happy', score: 80, emoji: '😊' },
-                { text: 'Finished a great book today. Feeling inspired and content.', mood: 'Calm', score: 50, emoji: '😌' }
-            ];
-
-            const existingEntries = getEntries();
-            const now = Date.now();
-            
-            demoEntries.forEach((entry, index) => {
-                existingEntries.push({
-                    id: now + index,
-                    date: new Date(now - (6 - index) * 86400000).toISOString(), // Last 7 days
-                    text: entry.text,
-                    mood: entry.mood,
-                    score: entry.score,
-                    emoji: entry.emoji
-                });
-            });
-
-            localStorage.setItem('mindverse_entries', JSON.stringify(existingEntries));
-            
-            // Add some focus data
-            saveFocusData({ sessions: 12, streak: 3, totalMinutes: 250, lastDate: new Date().toDateString() });
-            localStorage.setItem('mindverse_growth', '15');
-
-            showNotification('✨ Demo data loaded! Check out your Universe and Games!', 'success');
-            updateHomeStats();
-            if (currentSection === 'journal') renderJournal();
-            if (currentSection === 'universe') renderUniverse();
-        }
-
-        function resetAllData() {
-            if (!confirm('Reset all data? This cannot be undone!')) return;
-
-            localStorage.clear();
-            showNotification('All data has been reset.', 'info');
-            location.reload();
-        }
-
-        // ===== INITIALIZE =====
-        window.onload = () => {
-            // Check if user is already logged in (from session)
-            const savedUser = sessionStorage.getItem('mindverse_user');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                showMainApp();
-            }
-        };
-
-        // Save user session
-        window.addEventListener('beforeunload', () => {
-            if (currentUser) {
-                sessionStorage.setItem('mindverse_user', JSON.stringify(currentUser));
-            }
-        });
-
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            
-            @keyframes slideOutRight {
-                from {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateX(50px);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <!-- Audio Player for Songs -->
+    <div id="audioPlayer" class="audio-player" style="display: none;">
+        <div class="player-content">
+            <div class="player-info">
+                <div class="song-title" id="playerSongTitle">Song Title</div>
+                <div class="song-artist" id="playerSongArtist">Artist</div>
+            </div>
+            <div class="player-controls">
+                <button class="player-btn" onclick="togglePlay()">
+                    <i class="fas fa-play" id="playPauseIcon"></i>
+                </button>
+                <button class="player-btn" onclick="stopSong()">
+                    <i class="fas fa-stop"></i>
+                </button>
+            </div>
+            <div class="player-progress">
+                <div class="progress-bar" id="songProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
